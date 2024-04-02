@@ -1,8 +1,11 @@
 package com.example.bookingCare.controllers;
 
 
+import com.example.bookingCare.Service.UserService;
 import com.example.bookingCare.models.User;
+import com.example.bookingCare.models.UserNoPassword;
 import com.example.bookingCare.repository.UserRepository;
+import org.springframework.core.SpringVersion;
 import org.springframework.http.MediaType;
 
 import org.springframework.web.bind.annotation.*;
@@ -18,65 +21,69 @@ import java.util.Optional;
 @RequestMapping("/api/User")
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     @GetMapping("/GetAllUser")
-    public ResponseEntity<List<User>> getAllUser() {
+    public ResponseEntity<List<UserNoPassword>> getAllUser() {
         try {
-            List<User> users = this.userRepository.findAll();
+            List<UserNoPassword> users = this.userService.findAllUser();
             return new ResponseEntity<>(users, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(Collections.emptyList(), HttpStatus.BAD_REQUEST);
         }
     }
 
-//    @PostMapping(path = "/CreateNewUser", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping("/GetUser/{id}")
+    public ResponseEntity<Object> getUserById(@PathVariable("id") Long id) {
+        boolean checkvalidId = this.userService.checkValidID(id);
+        if (!checkvalidId) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or missing user ID");
+        } else {
+            try {
+                UserNoPassword user = this.userService.findUserById(id);
+                if (user != null) return new ResponseEntity<>(user, HttpStatus.OK);
+                else return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with ID: " + id);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
     @PostMapping("/CreateNewUser")
     public ResponseEntity<Object> newUser(@RequestBody User newUser) {
         try {
-            this.userRepository.save(newUser);
+            this.userService.createNewUser(newUser);
             return ResponseEntity.status(HttpStatus.OK).body("create user success");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to save user: " + e.getMessage());
         }
     }
+
     @PutMapping(path = "/UpdateUserById/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Object> updateUser(@RequestBody User editUser, @PathVariable("id") Long id) {
-        if (id <= 0 ) {
+        boolean checkvalidId = this.userService.checkValidID(id);
+        if (!checkvalidId) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or missing user ID");
-        }
-        User updatedUser = this.userRepository.findById(id)
-                .map(user -> {
-                    user.setName(editUser.getName());
-                    user.setUserName(editUser.getUserName());
-                    user.setAddress(editUser.getAddress());
-                    user.setBirthday(editUser.getBirthday());
-                    user.setPhoneNumber(editUser.getPhoneNumber());
-                    user.setPassword(editUser.getPassword());
-                    user.setGender(editUser.getGender());
-                    return this.userRepository.save(user);
-                })
-                .orElse(null);
-
-        if (updatedUser != null) {
-            return ResponseEntity.status(HttpStatus.OK).body("User updated successfully");
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id: " + id);
+            User updatedUser = this.userService.updateUser(editUser, id);
+            if (updatedUser != null) {
+                return ResponseEntity.status(HttpStatus.OK).body("User updated successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id: " + id);
+            }
         }
     }
+
     @DeleteMapping("/DeleteUserById/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
-        if (id <= 0) {
+        boolean checkvalidId = this.userService.checkValidID(id);
+        if (!checkvalidId) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or missing user ID");
-        }
-        Optional<User> optionalUser = this.userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            this.userRepository.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body("User with ID " + id + " deleted successfully");
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with ID: " + id);
+            boolean deleted = this.userService.deleteUserById(id);
+            if (deleted) {
+                return ResponseEntity.status(HttpStatus.OK).body("User with ID " + id + " deleted successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with ID: " + id);
+            }
         }
     }
-
-
-
 }
