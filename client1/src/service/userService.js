@@ -125,6 +125,22 @@ const getDocBySearchName = async (data) => {
     data: data
   });
 }
+const getHospital = async () => {
+  const url = `${backendURL}/api/Hospital/GetAllHospital`;
+  return await axios.get(url);
+};
+const getDepartment = async (id) => {
+  const url = `${backendURL}/api/Department/GetDepartmentByHospitalId/${id}`;
+  return await axios.get(url);
+};
+const delHospital = async (id) => {
+  const url = `${backendURL}/api/Hospital/DeleteHospitalById/${id}`;
+  return await axios.delete(url);
+};
+const delDepartment = async (id) => {
+  const url = `${backendURL}/api/Department/DeleteDepartmentById/${id}`;
+  return await axios.delete(url);
+};
 export {
   handleAuth,
   getUser,
@@ -141,4 +157,8 @@ export {
   getHistory,
   getDocBySearchPublic,
   getDocBySearchName,
+  getHospital,
+  getDepartment,
+  delHospital,
+  delDepartment
 };
