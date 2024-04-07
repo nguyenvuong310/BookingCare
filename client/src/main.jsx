@@ -6,6 +6,11 @@ import HomePage from "./pages/HomePage.jsx"
 import HomePageUser from "./pages/HomePageUser.jsx"
 import HomePageAdmin from "./pages/HomePageAdmin.jsx"
 import FindHospital from "./pages/FindHospital.jsx"
+import Schedule from "./pages/Schedule.jsx"
+import DoctorManagement from "./pages/DoctorManagement.jsx"
+import AppointmentManagement from "./pages/AppointmentManagement.jsx"
+import AdminHospital from "./pages/AdminHospital.jsx"
+import AdminDepartment from "./pages/AdminDepartment.jsx";
 import "./index.css";
 import { path } from "../src/utils/constant.js";
 import {
@@ -28,7 +33,14 @@ const router = createBrowserRouter(
           <Route index={true} element={<HomePageUser />}></Route>
           <Route path="/user/findHospital" element={<FindHospital />} />
         </Route>
-        <Route path="/admin" element={<HomePageAdmin />}>
+        <Route path="/admin" >
+          <Route index={true} element={<HomePageAdmin />}></Route>
+          <Route path="/admin/hospital/:hospital_id/department" element={<AdminDepartment />} />
+          <Route path="/admin/hospital/:hospital_id/department/:department_id/doctor" element={<DoctorManagement />} />
+          <Route path="/admin/hospital/:hospital_id/department/:department_id/doctor/:doctor_id/schedule" element={<Schedule />} />
+          <Route path="/admin/hospital/:hospital_id/department/:department_id/doctor/:doctor_id/appointment" element={<AppointmentManagement />} />
+         
+          
         </Route>
       </Route>
     </>,

@@ -115,6 +115,38 @@ const ConfirmPrinted = async (data) => {
         data: data
     });
 }
+const getHospital = async () => {
+    const url = `${backendURL}/api/Hospital/GetAllHospital`;
+    return await axios.get(url);
+};
+const getDepartment = async (id) => {
+    const url = `${backendURL}/api/Department/GetDepartmentByHospitalId/${id}`;
+    return await axios.get(url);
+};
+const delHospital = async (id) => {
+    try {
+        const url = `${backendURL}/api/Hospital/DeleteHospitalById/${id}`;
+        return await axios.delete(url);
+    } catch {
+        alert("The hospital currently has departments so it cannot be deleted")
+    }  
+};
+const delDepartment = async (id) => {
+    const url = `${backendURL}/api/Department/DeleteDepartmentById/${id}`;
+    return await axios.delete(url);
+};
+const getDoctor = async (id) => {
+    const url = `${backendURL}/api/Doctor/GetDoctorByDepartmentId/${id}`;
+    return await axios.get(url);
+} 
+const getSchedule= async (id) => {
+    const url = `${backendURL}/api/Schedule/getAllSchedule/${id}`;
+    return await axios.get(url);
+} 
+const getAppointment= async (id) => {
+    const url = `${backendURL}/api/Appointment/GetAllDepartmentByDoctor/${id}`;
+    return await axios.get(url);
+} 
 export {
     getAllUser,
     getBlockedUser,
@@ -128,5 +160,12 @@ export {
     getHistory,
     getHistorybySearch,
     UpdatePrinter,
-    ConfirmPrinted
+    ConfirmPrinted,
+    getHospital,
+  getDepartment,
+  delHospital,
+  delDepartment,
+  getDoctor,
+  getSchedule,
+  getAppointment
 };
