@@ -1,5 +1,6 @@
 package com.example.bookingCare.Service;
 
+import com.example.bookingCare.models.Department;
 import com.example.bookingCare.models.User;
 import com.example.bookingCare.models.UserNoPassword;
 import com.example.bookingCare.repository.UserRepository;
@@ -49,6 +50,13 @@ public class UserService {
             return null;
         }
     }
+
+    public User findUserHavePasswordById(Long id) {
+        Optional<User> optionalUser = this.userRepository.findById(id);
+        return optionalUser.orElse(null);
+    }
+
+
     public void createNewUser(User user) {
         this.userRepository.save(user);
     }

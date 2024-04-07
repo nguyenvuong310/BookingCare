@@ -38,9 +38,7 @@ public class User
     @Column(nullable = true)
     public UserRole role;
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    public List<Appointment> appointmentList;
+
     public User(){
 
     }
@@ -118,5 +116,13 @@ public class User
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }
