@@ -2,15 +2,15 @@ import { useState, useEffect, cloneElement } from "react";
 import React from "react";
 import { HomeIcon, LanguageIcon } from "@heroicons/react/24/outline";
 import {
+    Button,
     Typography,
 
 } from "@material-tailwind/react";
-import { logout } from "../service/userService";
 import { useNavigate } from "react-router-dom";
 import { path, USER_ROLE } from "../utils/constant";
 
+
 const Header = ({ role }) => {
-    const navigate = useNavigate();
     const [openNav, setOpenNav] = useState(false);
     useEffect(() => {
         window.addEventListener(
@@ -18,10 +18,18 @@ const Header = ({ role }) => {
             () => window.innerWidth >= 960 && setOpenNav(false),
         );
     }, []);
-    const handleLogout = () => {
+    const navigate = useNavigate();
+    const handleNav = (request) => {
         // window.open(`http://localhost:8080/auth/logout`, "_self");
-
-        navigate(path.HOME);
+        if (request === "logout") {
+            navigate(path.HOME);
+        }
+        if (request === "hospital") {
+            navigate("/admin/hospital")
+        }
+        if (request === "doctor") {
+            navigate("/admin/doctor")
+        }
         // logout();
     };
     return (
@@ -31,12 +39,18 @@ const Header = ({ role }) => {
                     <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                         <div class="flex flex-shrink-0 items-center">
                         </div>
-                        <div class="flex flex-col space-x-4 px-3 py-2">
-                            <Typography variant="small" className="px-2 font-bold">
-                                BOOKING CARE
-                            </Typography>
+                        <div class="flex flex-col space-x-4 px-3 py-2" >
+                            <Button variant="small" className="px-2 font-bold"
+                                onClick={() => handleNav("hospital")}>
+                                Hospital
+                            </Button>
 
                         </div>
+                        <button className="rounded-md bg-green-700 px-3 py-2 text-sm font-medium text-white"
+                            onClick={() => handleNav("doctor")}
+                        >
+                            Doctor
+                        </button>
                     </div>
                     <div class="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-14">
                         <div class="hidden sm:ml-6 sm:block">
@@ -53,7 +67,7 @@ const Header = ({ role }) => {
                                 </div>
                                 <div class="pt-4">
                                     <button
-                                        onClick={handleLogout}
+                                        onClick={() => handleNav("logout")}
                                         className="rounded-md bg-red-700 px-3 py-2 text-sm font-medium text-white"
                                         aria-current="page"
                                     >

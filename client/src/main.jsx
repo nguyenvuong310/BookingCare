@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage.jsx"
 import HomePageUser from "./pages/HomePageUser.jsx"
 import HomePageAdmin from "./pages/HomePageAdmin.jsx"
 import FindHospital from "./pages/FindHospital.jsx"
+import Doctor from "./pages/Doctor.jsx";
 import "./index.css";
 import { path } from "../src/utils/constant.js";
 import {
@@ -29,7 +30,10 @@ const router = createBrowserRouter(
           <Route path="/user/findHospital" element={<FindHospital />} />
         </Route>
         <Route path="/admin" element={<HomePageAdmin />}>
+          {/* <Route index={true} element={<HomePageAdmin />}></Route>   */}
         </Route>
+        <Route path="/admin/doctor" element={<Doctor />} />
+      
       </Route>
     </>,
   ),

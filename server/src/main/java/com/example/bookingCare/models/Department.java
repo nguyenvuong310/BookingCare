@@ -2,6 +2,8 @@ package com.example.bookingCare.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="departments")
 public class Department {
@@ -19,4 +21,15 @@ public class Department {
     @Column(nullable = false)
     public String location;
 
+    @ManyToOne
+    @JoinColumn(name="hospital_id")
+    public Hospital hospital;
+
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
+    }
 }
