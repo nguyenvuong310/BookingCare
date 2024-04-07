@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage.jsx"
 import HomePageUser from "./pages/HomePageUser.jsx"
 import HomePageAdmin from "./pages/HomePageAdmin.jsx"
 import FindHospital from "./pages/FindHospital.jsx"
+import AdminHospital from "./pages/AdminHospital.jsx"
 import "./index.css";
 import { path } from "../src/utils/constant.js";
 import {
@@ -15,6 +16,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
+import AdminDepartment from "./pages/AdminDepartment.jsx";
 
 
 const router = createBrowserRouter(
@@ -29,7 +31,11 @@ const router = createBrowserRouter(
           <Route path="/user/findHospital" element={<FindHospital />} />
         </Route>
         <Route path="/admin" element={<HomePageAdmin />}>
+          {/* <Route index={true} element={<HomePageAdmin />}></Route> */}
+          
         </Route>
+        <Route path="/admin/hospital" element={<AdminHospital />} />
+        <Route path="/admin/hospital/:hospital_id/department" element={<AdminDepartment />} />
       </Route>
     </>,
   ),

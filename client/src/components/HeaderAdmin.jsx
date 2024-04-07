@@ -24,6 +24,21 @@ const Header = ({ role }) => {
         navigate(path.HOME);
         // logout();
     };
+
+    const handleNav = (request) => {
+        // window.open(`http://localhost:8080/auth/logout`, "_self");
+        if (request === "logout") {
+            navigate(path.HOME);
+        }
+        if (request === "hospital") {
+            navigate("/admin/hospital")
+        }
+        if (request === "doctor") {
+            navigate("/admin/doctor")
+        }
+        // logout();
+    };
+
     return (
         <nav class="bg-white shadow-xl">
             <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -37,6 +52,11 @@ const Header = ({ role }) => {
                             </Typography>
 
                         </div>
+                        <button className="rounded-md bg-green-700 px-3 py-2 text-sm font-medium text-white"
+                            onClick={() => handleNav("hospital")}
+                        >
+                            Hospital
+                        </button>
                     </div>
                     <div class="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-14">
                         <div class="hidden sm:ml-6 sm:block">
