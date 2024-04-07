@@ -1,14 +1,13 @@
-import HeaderAdmin from "../components/HeaderAdmin";
-
+import Header from "../components/Header";
+import MenuAdmin from "../components/MenuAdmin";
 const HomePageAdmin = () => {
 
 
     return (
         <>
-            <HeaderAdmin />
-            <div>
-                <h1>HomePageAdmin</h1>
-            </div>
+            <Header role='admin' />
+            <MenuAdmin />
+
         </>
     );
 }

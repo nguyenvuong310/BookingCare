@@ -1,9 +1,9 @@
-import HeaderUser from "../components/HeaderUser";
+import Header from "../components/Header";
 
 const HomePageUser = () => {
     return (
         <>
-            <HeaderUser />
+            <Header role='user' />
             <div>
                 <h1>HomePageUser</h1>
             </div>
