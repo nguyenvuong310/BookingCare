@@ -125,6 +125,7 @@ const getDocBySearchName = async (data) => {
     data: data
   });
 }
+
 export {
   handleAuth,
   getUser,
@@ -141,4 +142,5 @@ export {
   getHistory,
   getDocBySearchPublic,
   getDocBySearchName,
+  
 };

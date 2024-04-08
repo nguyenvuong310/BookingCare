@@ -18,7 +18,9 @@ public class Hospital {
     @Column(nullable = false)
     public String location;
 
-
+    public Long getId() {
+        return id;
+    }
 
     public String getName() {
         return name;

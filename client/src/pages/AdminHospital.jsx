@@ -1,5 +1,8 @@
+import React, { useEffect, useState } from "react";
+import { getHospital, delHospital } from "../service/adminService";
 import HeaderAdmin from "../components/HeaderAdmin";
-
+import Header from "../components/Header";
+import MenuAdmin from "../components/MenuAdmin";
 import { PencilIcon, EyeIcon, TrashIcon } from "@heroicons/react/24/solid";
 import {
     ArrowDownTrayIcon,
@@ -21,8 +24,9 @@ import {
 } from "@material-tailwind/react";
 
 import { useNavigate } from "react-router-dom";
-import React from "react";
-import { useEffect } from "react";
+import { data } from "autoprefixer";
+
+
 
 const TABLE_HEAD = ["ID", "Name", "Location", ""];
 
@@ -44,24 +48,9 @@ const TABLE_ROWS = [
     },
 ]
 
-
-// const handleNav = (request_data) => {
-//     console.log(request_data[0])
-//     console.log(request_data[1])
-// }   
-
 const AdminHospital = () => {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        fetch('http://localhost:8080/api/Hospital/GetAllHospital')
-          .then((res) => {
-            return res.json();
-          })
-          .then((data) => {
-            console.log(data);
-          });
-    }, []);
+    const [hospitalData, setHospitalData] = useState([]);
 
     const handleNav = (request_data) => {
         if (request_data.request === "View") {
@@ -69,13 +58,30 @@ const AdminHospital = () => {
             navigate("/admin/hospital/" + hospital_id + "/department");
         }
     }
-
+    useEffect(() => {
+        // Define an async function inside useEffect to fetch data
+        const fetchData = async () => {
+            try {
+                // Call the getHospital function from the service
+                const data = await getHospital();
+                // Update state with the fetched data
+                setHospitalData(data.data);
+            } catch (error) {
+                // Handle errors if any
+                console.error('Failed to fetch hospital data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+    const handleDeleteHospital = async (id) => {
+        await delHospital(id);
+        const data = await getHospital();
+        setHospitalData(data.data)
+    }
     return (
         <>
-            <HeaderAdmin />
+            <Header role='admin' />
             <div>
-                <h1>Home Hospital</h1>
-
                 <Card className="h-full w-full">
                     <CardHeader floated={false} shadow={false} className="rounded-none">
                         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
@@ -99,7 +105,7 @@ const AdminHospital = () => {
                                 </Button>
                             </div>
                         </div>
-                    </CardHeader> 
+                    </CardHeader>
                     <CardBody className="overflow-scroll px-0">
                         <table className="w-full min-w-max table-auto text-left">
                             <thead>
@@ -121,14 +127,9 @@ const AdminHospital = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {TABLE_ROWS.map(
+                                {hospitalData && hospitalData.length > 0 && hospitalData.map(
                                     (
-                                        {
-                                            id,
-                                            name,
-                                            location,
-
-                                        },
+                                        hospital,
                                         index,
                                     ) => {
                                         const isLast = index === TABLE_ROWS.length - 1;
@@ -137,7 +138,7 @@ const AdminHospital = () => {
                                             : "p-4 border-b border-blue-gray-50";
 
                                         return (
-                                            <tr key={id}>
+                                            <tr key={index}>
                                                 <td className={classes}>
                                                     <div className="flex items-center gap-3">
                                                         {/* <Avatar
@@ -151,7 +152,7 @@ const AdminHospital = () => {
                                                             color="blue-gray"
                                                             className="font-bold"
                                                         >
-                                                            {id}
+                                                            {index + 1}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -161,7 +162,7 @@ const AdminHospital = () => {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {name}
+                                                        {hospital.name}
                                                     </Typography>
                                                 </td>
                                                 <td className={classes}>
@@ -170,13 +171,13 @@ const AdminHospital = () => {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {location}
+                                                        {hospital.location}
                                                     </Typography>
                                                 </td>
-                                    
+
                                                 <td className={classes}>
                                                     <Tooltip content="View Hospital Detail">
-                                                        <IconButton variant="text" onClick={() => handleNav({request:"View", data: id})}>
+                                                        <IconButton variant="text" onClick={() => handleNav({ request: "View", data: hospital.id })}>
                                                             <EyeIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -185,8 +186,8 @@ const AdminHospital = () => {
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
-                                                    <Tooltip content="Remove Hospital">
-                                                        <IconButton variant="text">
+                                                    <Tooltip content="Remove Hospital" >
+                                                        <IconButton variant="text" onClick={() => handleDeleteHospital(hospital.id)}>
                                                             <TrashIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>

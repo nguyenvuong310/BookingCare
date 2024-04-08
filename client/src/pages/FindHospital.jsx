@@ -1,9 +1,9 @@
-import HeaderUser from "../components/HeaderUser";
+import Header from "../components/Header";
 
 const FindHospital = () => {
     return (
         <>
-            <HeaderUser />
+            <Header />
             <div>
                 <h1>FindHospitalsssssssssssssssssssssss</h1>
             </div>
