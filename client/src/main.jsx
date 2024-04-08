@@ -20,7 +20,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
-import AdminDepartment from "./pages/AdminDepartment.jsx";
 
 
 const router = createBrowserRouter(
