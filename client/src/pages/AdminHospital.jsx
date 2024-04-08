@@ -64,7 +64,6 @@ const AdminHospital = () => {
             try {
                 // Call the getHospital function from the service
                 const data = await getHospital();
-
                 // Update state with the fetched data
                 setHospitalData(data.data);
             } catch (error) {

@@ -1,4 +1,6 @@
 import Header from "../components/Header";
+import EditField from "../components/EditField";
+import AddField from "../components/AddField";
 import React, { useEffect, useState } from "react";
 import { getHospital, delHospital } from "../service/adminService";
 import { PencilIcon, EyeIcon, TrashIcon } from "@heroicons/react/24/solid";
@@ -13,9 +15,7 @@ import {
     Typography,
     Button,
     CardBody,
-    Chip,
     CardFooter,
-    Avatar,
     IconButton,
     Tooltip,
     Input,
@@ -26,11 +26,24 @@ const TABLE_HEAD = ["ID", "Name", "Location", "Activity"];
 const HomePageAdmin = () => {
     const navigate = useNavigate();
     const [hospitalData, setHospitalData] = useState([]);
+    const [toggleEdit, setToggleEdit] = useState(false);
+    const [dataEdit, setDataEdit] = useState({});
+    const [toggleAdd, setToggleAdd] = useState(false);
 
     const handleNav = (request_data) => {
         if (request_data.request === "View") {
             var hospital_id = request_data.data;
             navigate("/admin/hospital/" + hospital_id + "/department");
+        }
+
+        else if (request_data.request === "Edit") {
+            setToggleEdit(!toggleEdit)
+            setDataEdit(request_data.data)
+        }
+
+        else if (request_data.request === "Add") {          
+            setToggleAdd(!toggleAdd)
+            setDataEdit(request_data.data)
         }
     }
     useEffect(() => {
@@ -39,7 +52,6 @@ const HomePageAdmin = () => {
             try {
                 // Call the getHospital function from the service
                 const data = await getHospital();
-
                 // Update state with the fetched data
                 setHospitalData(data.data);
             } catch (error) {
@@ -54,6 +66,15 @@ const HomePageAdmin = () => {
         const data = await getHospital();
         setHospitalData(data.data)
     }
+
+    const handleToggleEdit = () => {
+        setToggleEdit(!toggleEdit)
+    }
+
+    const handleToggleAdd = () => {
+        setToggleAdd(!toggleAdd)
+    }
+
     return (
         <>
             <Header role='admin' />
@@ -76,7 +97,7 @@ const HomePageAdmin = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                <Button className="flex items-center gap-3" size="sm">
+                                <Button className="flex items-center gap-3" size="sm" onClick={() => handleNav({request: "Add", data: {id: "", name: "", location: ""}})}>
                                     ADD <PlusCircleIcon strokeWidth={2} className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -152,7 +173,7 @@ const HomePageAdmin = () => {
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip content="Edit Hospital">
-                                                        <IconButton variant="text">
+                                                        <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: hospital.id, name: hospital.name, location: hospital.location}})}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -203,6 +224,9 @@ const HomePageAdmin = () => {
                 </Card>
 
             </div>
+
+            {toggleEdit && <EditField values={dataEdit} table="hospitals" open={toggleEdit} parentCallBack={handleToggleEdit}/>}
+            {toggleAdd && <AddField values={dataEdit} table="hospitals" open={toggleAdd} parentCallBack={handleToggleAdd}/>}
         </>
     );
 }
