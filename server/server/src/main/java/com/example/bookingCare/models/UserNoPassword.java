@@ -2,10 +2,6 @@ package com.example.bookingCare.models;
 
 import jakarta.persistence.*;
 
-<<<<<<< HEAD
-import java.time.LocalDate;
-=======
->>>>>>> 531cc546870721d1f3e0f000e0f289f3484a8436
 import java.util.Date;
 import java.util.List;
 
@@ -18,11 +14,7 @@ public class UserNoPassword {
 
     public String gender;
 
-<<<<<<< HEAD
-    public LocalDate birthday;
-=======
     public Date birthday;
->>>>>>> 531cc546870721d1f3e0f000e0f289f3484a8436
 
     public String address;
 
@@ -35,11 +27,7 @@ public class UserNoPassword {
 
     }
 
-<<<<<<< HEAD
-    public UserNoPassword(Long id, String userName, String name, String gender, LocalDate birthday, String address, String phoneNumber) {
-=======
     public UserNoPassword(Long id, String userName, String name, String gender, Date birthday, String address, String phoneNumber) {
->>>>>>> 531cc546870721d1f3e0f000e0f289f3484a8436
         this.id = id;
         this.userName = userName;
         this.name = name;
@@ -81,19 +69,11 @@ public class UserNoPassword {
         this.gender = gender;
     }
 
-<<<<<<< HEAD
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-=======
     public Date getBirthday() {
         return birthday;
     }
 
     public void setBirthday(Date birthday) {
->>>>>>> 531cc546870721d1f3e0f000e0f289f3484a8436
         this.birthday = birthday;
     }
 

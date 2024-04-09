@@ -2,46 +2,53 @@ package com.example.bookingCare.models;
 
 import jakarta.persistence.*;
 
-<<<<<<< HEAD
-import java.time.LocalDate;
-=======
->>>>>>> 531cc546870721d1f3e0f000e0f289f3484a8436
 import java.util.Date;
 import java.util.List;
 
-public class UserNoPassword {
+@Entity
+@Table(name = "users")
+public class User
+{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, unique = true)
     private Long id;
 
+    @Column(nullable = true)
     public String userName;
 
-    public String name;
+    @Column(nullable = true)
+    public String password;
 
+    @Column(nullable = true, unique = true)
+    public String name;
+    @Column(nullable = true)
     public String gender;
 
-<<<<<<< HEAD
-    public LocalDate birthday;
-=======
+    @Column(nullable = true)
     public Date birthday;
->>>>>>> 531cc546870721d1f3e0f000e0f289f3484a8436
 
+    @Column(nullable = true)
     public String address;
 
+    @Column(nullable = true)
     public String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     public UserRole role;
 
-
-    public UserNoPassword(){
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    public List<Appointment> appointmentList;
+    public User(){
 
     }
 
-<<<<<<< HEAD
-    public UserNoPassword(Long id, String userName, String name, String gender, LocalDate birthday, String address, String phoneNumber) {
-=======
-    public UserNoPassword(Long id, String userName, String name, String gender, Date birthday, String address, String phoneNumber) {
->>>>>>> 531cc546870721d1f3e0f000e0f289f3484a8436
+    public User(Long id, String userName, String password, String name, String gender, Date birthday, String address, String phoneNumber) {
         this.id = id;
         this.userName = userName;
+        this.password = password;
         this.name = name;
         this.gender = gender;
         this.birthday = birthday;
@@ -65,6 +72,14 @@ public class UserNoPassword {
         this.userName = userName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }
@@ -81,19 +96,11 @@ public class UserNoPassword {
         this.gender = gender;
     }
 
-<<<<<<< HEAD
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-=======
     public Date getBirthday() {
         return birthday;
     }
 
     public void setBirthday(Date birthday) {
->>>>>>> 531cc546870721d1f3e0f000e0f289f3484a8436
         this.birthday = birthday;
     }
 
