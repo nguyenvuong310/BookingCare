@@ -1,5 +1,7 @@
 import axios from "axios";
 import { backendURL } from "../utils/constant";
+import { toast } from "react-toastify";
+import { data } from "autoprefixer";
 const getAllUser = async () => {
     const url = `${backendURL}/api/getalluser`;
     return await axios({
@@ -115,6 +117,94 @@ const ConfirmPrinted = async (data) => {
         data: data
     });
 }
+const getHospital = async () => {
+    const url = `${backendURL}/api/Hospital/GetAllHospital`;
+    return await axios.get(url);
+};
+const getDepartment = async (id) => {
+    const url = `${backendURL}/api/Department/GetDepartmentByHospitalId/${id}`;
+    return await axios.get(url);
+};
+
+const getDoctor = async (id) => {
+    const url = `${backendURL}/api/Doctor/GetDoctorByDepartmentId/${id}`;
+    return await axios.get(url);
+} 
+const getSchedule= async (id) => {
+    const url = `${backendURL}/api/Schedule/getAllSchedule/${id}`;
+    return await axios.get(url);
+} 
+const getAppointment= async (id) => {
+    const url = `${backendURL}/api/Appointment/GetAllDepartmentByDoctor/${id}`;
+    return await axios.get(url);
+} 
+const createNewHospital = async (data) => {
+    const url = `${backendURL}/api/Hospital/CreateNewHospital`;
+    return await axios.post(url, data);
+}
+const editHospital = async (data) => {
+    const url = `${backendURL}/api/Hospital/UpdateHospitalById/${data.id}`;
+    return await axios.put(url, data);
+}
+const createNewDepartment = async (data) => {
+    const url = `${backendURL}/api/Department/CreateNewDepartment?hospital_id=${data.hospital_id}`;
+    return await axios.post(url, data);
+}
+const editDepartment = async (data) => {
+    const url = `${backendURL}/api/Department/UpdateDepartmentById/${data.id}`;
+    return await axios.put(url, data);
+}
+const createNewDoctor = async (data) => {
+    const url = `${backendURL}/api/Doctor/CreateNewDoctor?department_id=${data.department_id}`;
+    return await axios.post(url, data);
+}
+const editDoctor = async (data) => {
+    const url = `${backendURL}/api/Doctor/UpdateDoctorById/${data.id}`;
+    return await axios.put(url, data);
+}
+const createNewSchedule = async (data) => {
+    const url = `${backendURL}/api/Schedule/CreateNewSchedule?doctor_id=${data.doctor_id}`;
+    return await axios.post(url, data);
+}
+const editSchedule = async (data) => {
+    const url = `${backendURL}/api/Schedule/UpdateScheduleById/${data.id}`;
+    return await axios.put(url, data);
+}
+const delHospital = async (id) => {
+    try {
+        const url = `${backendURL}/api/Hospital/DeleteHospitalById/${id}`;
+        return await axios.delete(url);
+    } catch {
+        alert("The hospital currently has departments so it cannot be deleted")
+    }  
+};
+const delDepartment = async (id) => {
+    try {
+        const url = `${backendURL}/api/Department/DeleteDepartmentById/${id}`;
+        return await axios.delete(url);
+    }
+    catch {
+        alert("The department currently has doctors so it cannot be deleted")
+    }
+};
+const delDoctor = async (id) => {
+    try {
+        const url = `${backendURL}/api/Doctor/DeleteDoctorById/${id}`;
+        return await axios.delete(url);
+    }
+    catch {
+        alert("The doctor currently has appointments or schedules so it cannot be deleted")
+    } 
+};
+const delSchedule = async (id) => {
+    try {
+        const url = `${backendURL}/api/Schedule/DeleteScheduleById/${id}`;
+        return await axios.delete(url);
+    }
+    catch {
+        alert("The schedule cannot be deleted")
+    } 
+};
 export {
     getAllUser,
     getBlockedUser,
@@ -128,5 +218,22 @@ export {
     getHistory,
     getHistorybySearch,
     UpdatePrinter,
-    ConfirmPrinted
+    ConfirmPrinted,
+    getHospital,
+  getDepartment,
+  delHospital,
+  delDepartment,
+  getDoctor,
+  getSchedule,
+  getAppointment,
+  createNewHospital,
+  editHospital,
+  createNewDepartment,
+  editDepartment,
+  createNewDoctor,
+  editDoctor,
+  createNewSchedule,
+  editSchedule,
+  delDoctor,
+  delSchedule
 };
