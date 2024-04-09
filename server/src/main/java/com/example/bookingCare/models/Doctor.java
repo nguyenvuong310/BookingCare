@@ -3,6 +3,7 @@ package com.example.bookingCare.models;
 import jakarta.persistence.*;
 
 import javax.print.Doc;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -25,7 +26,7 @@ public class Doctor {
     private String gender;
 
     @Column(nullable = true)
-    private Date birthday;
+    private LocalDate birthday;
 
     @Column(nullable = true)
     private String address;
@@ -33,9 +34,6 @@ public class Doctor {
     @Column(nullable = true)
     private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = true)
-    private UserRole role;
 
     @Column(nullable = true)
     private String qualifications;
@@ -77,11 +75,11 @@ public class Doctor {
         this.name = name;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -107,14 +105,6 @@ public class Doctor {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
     }
 
     public void setDepartment(Department department) {

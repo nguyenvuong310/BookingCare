@@ -2,6 +2,7 @@ package com.example.bookingCare.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class UserNoPassword {
 
     public String gender;
 
-    public Date birthday;
+    public LocalDate birthday;
 
     public String address;
 
@@ -27,7 +28,7 @@ public class UserNoPassword {
 
     }
 
-    public UserNoPassword(Long id, String userName, String name, String gender, Date birthday, String address, String phoneNumber) {
+    public UserNoPassword(Long id, String userName, String name, String gender, LocalDate birthday, String address, String phoneNumber) {
         this.id = id;
         this.userName = userName;
         this.name = name;
@@ -69,11 +70,11 @@ public class UserNoPassword {
         this.gender = gender;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

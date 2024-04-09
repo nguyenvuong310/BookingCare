@@ -20,11 +20,14 @@ public class ScheduleService {
     @Autowired
     private  DoctorRepository doctorRepository;
     public List<Schedule> findAllScheduleByDoctorId(Long doctor_id) {
-        List<Schedule> schedules = this.scheduleRepository.findByDoctorListId(doctor_id);
+        List<Schedule> schedules = this.scheduleRepository.findByDoctorId(doctor_id);
         return schedules;
     }
 
-    public void createNewSchedule(Schedule schedule) {
+    public void createNewSchedule(Schedule schedule, Long id) {
+        Optional<Doctor> optionalDoctor = this.doctorRepository.findById(id);
+        Doctor doctor = optionalDoctor.get();
+        schedule.setDoctor(doctor);
         this.scheduleRepository.save(schedule);
     }
     public boolean checkValidID(Long id) {
@@ -46,8 +49,6 @@ public class ScheduleService {
                     schedule.setId(editSchedule.getId());
                     schedule.setSlot(editSchedule.getSlot());
                     schedule.setTime(editSchedule.getTime());
-                    schedule.setDepartment(editSchedule.getDepartment());
-                    schedule.setDoctorList(editSchedule.getDoctorList());
                     return this.scheduleRepository.save(schedule);
                 })
                 .orElse(null);

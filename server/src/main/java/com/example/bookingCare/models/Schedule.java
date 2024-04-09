@@ -3,6 +3,7 @@ package com.example.bookingCare.models;
 import jakarta.persistence.*;
 
 import javax.print.Doc;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -16,20 +17,13 @@ public class Schedule {
     @Column(nullable = true)
     public String time;
     @Column(nullable = true)
-    public String date;
+    public LocalDate date;
     @Column(nullable = true)
     public Long slot;
-    @ManyToMany
-    @JoinTable(
-            name= "work_schedule",
-           joinColumns = @JoinColumn(name = "schedule_id"),
-            inverseJoinColumns = @JoinColumn(name = "doctor_id")
-    )
-    public List<Doctor> doctorList;
 
     @ManyToOne
-    @JoinColumn(name="department_id")
-    public Department department;
+    @JoinColumn(name="doctor_id")
+    public Doctor doctor;
 
     public Schedule() {
 
@@ -59,27 +53,20 @@ public class Schedule {
         return time;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
-    public List<Doctor> getDoctorList() {
-        return doctorList;
-    }
-
-    public void setDoctorList(List<Doctor> doctorList) {
-        this.doctorList = doctorList;
-    }
-
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
+
 }

@@ -1,7 +1,9 @@
 package com.example.bookingCare.models;
 
 import jakarta.persistence.*;
+import net.bytebuddy.asm.Advice;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -16,7 +18,7 @@ public class Appointment {
     public String time;
 
     @Column(nullable = false)
-    public String date;
+    public LocalDate date;
 
     @Column(nullable = false)
     public String status;
@@ -38,7 +40,7 @@ public class Appointment {
     }
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name="user_id")
     public User user;
     public User getUser() {
         return user;
@@ -56,11 +58,11 @@ public class Appointment {
         this.time = time;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

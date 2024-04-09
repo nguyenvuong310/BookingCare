@@ -41,9 +41,9 @@ public class ScheduleController {
         }
     }
     @PostMapping("/CreateNewSchedule")
-    public ResponseEntity<Object> newUser(@RequestBody Schedule newschedule) {
+    public ResponseEntity<Object> newUser(@RequestBody Schedule newschedule, @RequestParam("doctor_id") Long id) {
         try {
-            this.scheduleService.createNewSchedule(newschedule);
+            this.scheduleService.createNewSchedule(newschedule, id);
             return ResponseEntity.status(HttpStatus.OK).body("create schedule success");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to save schedule: " + e.getMessage());
