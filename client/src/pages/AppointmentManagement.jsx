@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getAppointment} from "../service/adminService";
 import React, { useEffect, useState } from "react";
-const TABLE_HEAD = ["ID", "Patient", "Doctor", "Department", "Date", "Time", "Status", "Activity"];
+const TABLE_HEAD = ["ID", "Patient", "Doctor", "Department", "Date", "Time", "Status"];
 const Appointment = () => {
     const params = useParams();
     const doctor_id = params.doctor_id;
@@ -67,9 +67,7 @@ const Appointment = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                <Button className="flex items-center gap-3" size="sm">
-                                    ADD <PlusCircleIcon strokeWidth={2} className="h-4 w-4" />
-                                </Button>
+                                
                             </div>
                         </div>
                     </CardHeader>
@@ -172,28 +170,7 @@ const Appointment = () => {
                                                     </Typography>
                                                 </td>
 
-                                                <td className={classes}>
-                                                    <Tooltip content="View Schedule">
-                                                        <IconButton variant="text">
-                                                            <CalendarIcon className="h-4 w-4" />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    <Tooltip content="View Appointment">
-                                                        <IconButton variant="text">
-                                                            <EyeIcon className="h-4 w-4" />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    <Tooltip content="Edit Hospital">
-                                                        <IconButton variant="text">
-                                                            <PencilIcon className="h-4 w-4" />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    <Tooltip content="Remove Hospital" >
-                                                        <IconButton variant="text">
-                                                            <TrashIcon className="h-4 w-4" />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                </td>
+                                               
                                             </tr>
                                         );
                                     },

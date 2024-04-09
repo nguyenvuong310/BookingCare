@@ -21,8 +21,11 @@ import {
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { getDoctor} from "../service/adminService";
+import { getDoctor, delDoctor} from "../service/adminService";
 import React, { useEffect, useState } from "react";
+import EditField from "../components/EditField";
+import AddField from "../components/AddField";
+import { doc } from "prettier";
 const TABLE_HEAD = ["ID", "Name", "Qualification", "Activity"];
 const DoctorManagement = () => {
     const params = useParams();
@@ -30,14 +33,26 @@ const DoctorManagement = () => {
     const department_id = params.department_id;
     const navigate = useNavigate();
     const [doctorData, setDoctorData] = useState([]);
+    const [toggleEdit, setToggleEdit] = useState(false);
+    const [dataEdit, setDataEdit] = useState({});
+    const [toggleAdd, setToggleAdd] = useState(false);
     const handleNav = (request_data) => {
         if (request_data.request === "Viewschedule") {
             var doctor_id = request_data.data;
             navigate("/admin/hospital/" + hospital_id + "/department/" + department_id + "/doctor/" + doctor_id + "/schedule");
         }
-        if (request_data.request === "Viewappointment") {
+        else if (request_data.request === "Viewappointment") {
             var doctor_id = request_data.data;
             navigate("/admin/hospital/" + hospital_id + "/department/" + department_id + "/doctor/" + doctor_id + "/appointment");
+        }
+        else if (request_data.request === "Edit") {
+            setToggleEdit(!toggleEdit)
+            setDataEdit(request_data.data)
+        }
+
+        else if (request_data.request === "Add") {          
+            setToggleAdd(!toggleAdd)
+            setDataEdit(request_data.data)
         }
     }
     useEffect(() => {
@@ -56,6 +71,22 @@ const DoctorManagement = () => {
         };
         fetchData();
     }, []);
+    const handleToggleEdit = async () => {
+        setToggleEdit(!toggleEdit)
+        const data = await getDoctor(department_id);
+        setDoctorData(data.data)
+    }
+
+    const handleToggleAdd = async () => {
+        setToggleAdd(!toggleAdd)
+        const data = await getDoctor(department_id);
+        setDoctorData(data.data)
+    }
+    const handleDeleteDoctor = async (id) => {
+        await delDoctor(id);
+        const data = await getDoctor(department_id);
+        setDoctorData(data.data)
+    }
     return (
         <>
             <Header role='admin' />
@@ -78,7 +109,7 @@ const DoctorManagement = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                <Button className="flex items-center gap-3" size="sm">
+                                <Button className="flex items-center gap-3" size="sm" onClick={() => handleNav({request: "Add", data: {id: "", name: "", birthday: "", address: "", gender: "", phone_number: "", qualifications: "", user_name: "", password: "", department_id: department_id}})}>
                                     ADD <PlusCircleIcon strokeWidth={2} className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -159,12 +190,12 @@ const DoctorManagement = () => {
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip content="Edit Hospital">
-                                                        <IconButton variant="text">
+                                                        <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: doctor.id, name: doctor.name, birthday: doctor.birthday, address: doctor.address, gender: doctor.gender, phone_number: doctor.phone_number, qualifications: doctor.qualifications, user_name: doctor.user_name, password: doctor.password, department_id: department_id}})}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip content="Remove Hospital" >
-                                                        <IconButton variant="text">
+                                                        <IconButton variant="text" onClick={() => handleDeleteDoctor(doctor.id)}>
                                                             <TrashIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -210,6 +241,8 @@ const DoctorManagement = () => {
                 </Card>
 
             </div>
+            {toggleEdit && <EditField values={dataEdit} table="doctors" open={toggleEdit} parentCallBack={handleToggleEdit}/>}
+            {toggleAdd && <AddField values={dataEdit} table="doctors" open={toggleAdd} parentCallBack={handleToggleAdd}/>}
         </>
     );
 }

@@ -22,6 +22,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getDepartment, delDepartment } from "../service/adminService";
+import EditField from "../components/EditField";
+import AddField from "../components/AddField";
 import React, { useEffect, useState } from "react";
 const TABLE_HEAD = ["ID", "Name", "Location", "Activity"];
 
@@ -29,11 +31,23 @@ const AdminDepartment = () => {
     const params = useParams();
     const navigate = useNavigate();
     const hospital_id = params.hospital_id;
+    const [toggleEdit, setToggleEdit] = useState(false);
+    const [dataEdit, setDataEdit] = useState({});
+    const [toggleAdd, setToggleAdd] = useState(false);
     const [departmentData, setDepartmentData] = useState([]);
     const handleNav = (request_data) => {
         if (request_data.request === "View") {
             var department_id = request_data.data;
             navigate("/admin/hospital/" + hospital_id + "/department/" + department_id + "/doctor");
+        }
+        else if (request_data.request === "Edit") {
+            setToggleEdit(!toggleEdit)
+            setDataEdit(request_data.data)
+        }
+
+        else if (request_data.request === "Add") {          
+            setToggleAdd(!toggleAdd)
+            setDataEdit(request_data.data)
         }
     }
     useEffect(() => {
@@ -53,15 +67,20 @@ const AdminDepartment = () => {
         fetchData();
     }, []);
     const deleteDepartment = async (id) => {
-        console.log(id)
-        res = await delDepartment(id)
-
-
+        await delDepartment(id)
         const data = await getDepartment(hospital_id);
-        console.log("department", data)
-
-        // Update state with the fetched data
         setDepartmentData(data.data);
+    }
+    const handleToggleEdit = async () => {
+        setToggleEdit(!toggleEdit)
+        const data = await getDepartment(hospital_id);
+        setDepartmentData(data.data)
+    }
+
+    const handleToggleAdd = async () => {
+        setToggleAdd(!toggleAdd)
+        const data = await getDepartment(hospital_id);
+        setDepartmentData(data.data)
     }
     return (
         <>
@@ -85,7 +104,7 @@ const AdminDepartment = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                <Button className="flex items-center gap-3" size="sm">
+                                <Button className="flex items-center gap-3" size="sm" onClick={() => handleNav({request: "Add", data: {id: "", name: "", location: "", symptom: "", hospital_id: hospital_id}})}>
                                     ADD <PlusCircleIcon strokeWidth={2} className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -161,7 +180,7 @@ const AdminDepartment = () => {
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip content="Edit Hospital">
-                                                        <IconButton variant="text">
+                                                        <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: department.id, name: department.name, location: department.location, symptom: department.symptom}})}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -212,6 +231,8 @@ const AdminDepartment = () => {
                 </Card>
 
             </div>
+            {toggleEdit && <EditField values={dataEdit} table="departments" open={toggleEdit} parentCallBack={handleToggleEdit}/>}
+            {toggleAdd && <AddField values={dataEdit} table="departments" open={toggleAdd} parentCallBack={handleToggleAdd}/>}
         </>
     );
 }

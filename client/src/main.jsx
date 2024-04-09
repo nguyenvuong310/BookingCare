@@ -32,6 +32,7 @@ const router = createBrowserRouter(
         <Route path="/user" >
           <Route index={true} element={<HomePageUser />}></Route>
           <Route path="/user/findHospital" element={<FindHospital />} />
+          
         </Route>
         <Route path="/admin" >
           <Route index={true} element={<HomePageAdmin />}></Route>
