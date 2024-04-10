@@ -11,6 +11,7 @@ import DoctorManagement from "./pages/DoctorManagement.jsx"
 import AppointmentManagement from "./pages/AppointmentManagement.jsx"
 import AdminHospital from "./pages/AdminHospital.jsx"
 import AdminDepartment from "./pages/AdminDepartment.jsx";
+import UserHistory from "./pages/UserHistory.jsx"
 import "./index.css";
 import { path } from "../src/utils/constant.js";
 import {
@@ -32,7 +33,8 @@ const router = createBrowserRouter(
         <Route path="/user" >
           <Route index={true} element={<HomePageUser />}></Route>
           <Route path="/user/findHospital" element={<FindHospital />} />
-          
+          <Route path="/user/history" element={<UserHistory />} />
+
         </Route>
         <Route path="/admin" >
           <Route index={true} element={<HomePageAdmin />}></Route>
@@ -40,8 +42,8 @@ const router = createBrowserRouter(
           <Route path="/admin/hospital/:hospital_id/department/:department_id/doctor" element={<DoctorManagement />} />
           <Route path="/admin/hospital/:hospital_id/department/:department_id/doctor/:doctor_id/schedule" element={<Schedule />} />
           <Route path="/admin/hospital/:hospital_id/department/:department_id/doctor/:doctor_id/appointment" element={<AppointmentManagement />} />
-         
-          
+
+
         </Route>
       </Route>
     </>,
