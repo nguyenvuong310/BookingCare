@@ -5,26 +5,21 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="departments")
-public class Department {
+@Table(name = "symptoms")
+public class Symptom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
     private Long id;
 
     @Column(nullable = false)
-    public String name;
-
-
-    @Column(nullable = false)
-    public String location;
+    private String name;
 
     @ManyToOne
-    @JoinColumn(name="hospital_id")
-    public Hospital hospital;
-    public Department() {
+    @JoinColumn(name="department_id")
+    public Department department;
 
-    }
+    public Symptom() {}
     public Long getId() {
         return id;
     }
@@ -41,20 +36,11 @@ public class Department {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-
-    public Hospital getHospital() {
-        return hospital;
-    }
-
-    public void setHospital(Hospital hospital) {
-        this.hospital = hospital;
+    public Department getDepartment() {
+        return department;
     }
 }

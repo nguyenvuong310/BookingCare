@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/User")
+@CrossOrigin
 public class UserController {
     @Autowired
     private UserService userService;
@@ -84,6 +85,15 @@ public class UserController {
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with ID: " + id);
             }
+        }
+    }
+    @GetMapping("/handleLogin")
+    public ResponseEntity<UserNoPassword> handleLogin(@RequestParam("username") String username, @RequestParam("password") String password) {
+        try {
+            UserNoPassword user = this.userService.handleLogin(username, password);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

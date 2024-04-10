@@ -125,7 +125,22 @@ const getDocBySearchName = async (data) => {
     data: data
   });
 }
-
+const handleLogin = async (username, password) => {
+  const url = `${backendURL}/api/User/handleLogin?username=${username}&password=${password}`;
+  return await axios.get(url);
+}
+const getInfoUserById = async (user_id) => {
+  const url = `${backendURL}/api/User/GetUser/${user_id}`;
+  return await axios.get(url);
+}
+const getSymptom = async () => {
+  const url = `${backendURL}/api/Symptom/GetAllSymptom`;
+  return await axios.get(url);
+}
+const getDepartmentBySymptom  = async (symptom) => {
+  const url = `${backendURL}/api/Department/GetDepartmentBySymptom?symptom=${symptom}`;
+  return await axios.get(url);
+}
 export {
   handleAuth,
   getUser,
@@ -142,5 +157,8 @@ export {
   getHistory,
   getDocBySearchPublic,
   getDocBySearchName,
-  
+  handleLogin,
+  getInfoUserById,
+  getSymptom,
+  getDepartmentBySymptom
 };

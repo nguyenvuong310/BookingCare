@@ -25,6 +25,7 @@ import { getSchedule, delSchedule} from "../service/adminService";
 import EditField from "../components/EditField";
 import AddField from "../components/AddField";
 import React, { useEffect, useState } from "react";
+import { format } from 'date-fns';
 const TABLE_HEAD = ["ID", "Date", "Time", "Activity"];
 const Schedule = () => {
     const params = useParams();
@@ -156,7 +157,7 @@ const Schedule = () => {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {schedule.date}
+                                                        {format(new Date(schedule.date), 'dd/MM/yyyy')}
                                                     </Typography>
                                                 </td>
                                                 <td className={classes}>
@@ -170,12 +171,12 @@ const Schedule = () => {
                                                 </td>
 
                                                 <td className={classes}>
-                                                    <Tooltip content="Edit Hospital">
+                                                    <Tooltip content="Edit Schedule">
                                                         <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: schedule.id, date: schedule.date, time: schedule.time, slot: schedule.slot, doctor_id: doctor_id}})}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
-                                                    <Tooltip content="Remove Hospital" >
+                                                    <Tooltip content="Remove Schedule" >
                                                         <IconButton variant="text" onClick={() => handleDeleteSchedule(schedule.id)}>
                                                             <TrashIcon className="h-4 w-4" />
                                                         </IconButton>

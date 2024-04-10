@@ -179,12 +179,12 @@ const AdminDepartment = () => {
                                                             <EyeIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
-                                                    <Tooltip content="Edit Hospital">
+                                                    <Tooltip content="Edit Department">
                                                         <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: department.id, name: department.name, location: department.location, symptom: department.symptom}})}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
-                                                    <Tooltip content="Remove Hospital" >
+                                                    <Tooltip content="Remove Department" >
                                                         <IconButton variant="text" onClick={() => deleteDepartment(department.id)}>
                                                             <TrashIcon className="h-4 w-4" />
                                                         </IconButton>

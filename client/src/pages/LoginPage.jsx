@@ -2,23 +2,11 @@ import { path, USER_ROLE } from "../utils/constant";
 import { useNavigate } from "react-router-dom";
 import medicalImage from "../assets/medical.jpg"
 import React, { useState } from "react";
-
+import {handleLogin} from "../service/userService";
 const LoginPage = () => {
     const navigate = useNavigate();
-    const handleLogin = async (role) => {
-        if (role === "user") {
-
-            navigate(path.HOMEPAGEUSER);
-        } else {
-            navigate(path.HOMEPAGEADMIN);
-        }
-    };
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const data = {
-        username: username,
-        password: password,
-    }
     const handleOnChangeName = (event) => {
         setUsername(event.target.value)
     }
@@ -26,10 +14,18 @@ const LoginPage = () => {
         setPassword(event.target.value)
     }
 
-    const handleSubmit = (event) => {
-        if (username == 'admin' && password == 'admin')
-
+    const handleSubmit = async (event) => {
+        if (username == 'admin' && password == 'admin') {
             navigate(path.HOMEPAGEADMIN);
+        } else {
+            const data = await handleLogin(username, password);
+            if (data && data.data && data.data.id) {
+                console.log(data)
+                navigate("/user/" + data.data.id)
+            } else {
+                alert("Tai khoan khong ton tai")
+            }
+        }
         event.preventDefault();
     };
     return (
@@ -57,9 +53,8 @@ const LoginPage = () => {
                                         id="username"
                                         name="username"
                                         type="username"
-                                        autoComplete="username"
                                         required
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        className="pl-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         onChange={(event) => handleOnChangeName(event)}
                                     />
                                 </div>
@@ -81,7 +76,6 @@ const LoginPage = () => {
                                         id="password"
                                         name="password"
                                         type="password"
-                                        autoComplete="current-password"
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         onChange={(event) => handleOnChangePassword(event)}

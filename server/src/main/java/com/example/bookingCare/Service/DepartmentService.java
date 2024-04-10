@@ -2,6 +2,7 @@ package com.example.bookingCare.Service;
 
 import com.example.bookingCare.models.Department;
 import com.example.bookingCare.models.Hospital;
+import com.example.bookingCare.models.Symptom;
 import com.example.bookingCare.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ public class DepartmentService {
 
     @Autowired
     private HospitalService hospitalService;
-
+    @Autowired
+    private SymptomService symptomService;
     public List<Department> findAllDepartment() {
         return this.departmentRepository.findAll();
     }
@@ -48,8 +50,6 @@ public class DepartmentService {
                     department.setId(editDepartment.getId());
                     department.setLocation(editDepartment.getLocation());
                     department.setName(editDepartment.getName());
-                    department.setSymptom(editDepartment.getSymptom());
-//                    department.setHospital(editDepartment.getHospital());
                     return this.departmentRepository.save(department);
                 })
                 .orElse(null);
@@ -62,5 +62,9 @@ public class DepartmentService {
         } else {
             return false;
         }
+    }
+    public Department findDepartmentBySymptom(String symtom) {
+        Symptom symptom = this.symptomService.findAllSymptomByName(symtom);
+        return symptom.getDepartment();
     }
 }

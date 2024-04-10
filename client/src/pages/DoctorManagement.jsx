@@ -29,7 +29,7 @@ import { doc } from "prettier";
 const TABLE_HEAD = ["ID", "Name", "Qualification", "Activity"];
 const DoctorManagement = () => {
     const params = useParams();
-    const hospital_id = params.doctor_id;
+    const hospital_id = params.hospital_id;
     const department_id = params.department_id;
     const navigate = useNavigate();
     const [doctorData, setDoctorData] = useState([]);
@@ -189,12 +189,12 @@ const DoctorManagement = () => {
                                                             <EyeIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
-                                                    <Tooltip content="Edit Hospital">
+                                                    <Tooltip content="Edit Doctor">
                                                         <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: doctor.id, name: doctor.name, birthday: doctor.birthday, address: doctor.address, gender: doctor.gender, phone_number: doctor.phone_number, qualifications: doctor.qualifications, user_name: doctor.user_name, password: doctor.password, department_id: department_id}})}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
-                                                    <Tooltip content="Remove Hospital" >
+                                                    <Tooltip content="Remove Doctor" >
                                                         <IconButton variant="text" onClick={() => handleDeleteDoctor(doctor.id)}>
                                                             <TrashIcon className="h-4 w-4" />
                                                         </IconButton>

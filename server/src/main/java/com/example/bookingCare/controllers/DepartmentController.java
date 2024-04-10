@@ -95,4 +95,13 @@ public class DepartmentController {
             }
         }
     }
+    @GetMapping("/GetDepartmentBySymptom")
+    public ResponseEntity<Department> getDepartmentBySymptom(@RequestParam("symptom") String symptom) {
+        try {
+            Department department = this.departmentService.findDepartmentBySymptom(symptom);
+            return new ResponseEntity<>(department, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
