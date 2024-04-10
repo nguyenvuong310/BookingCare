@@ -30,11 +30,20 @@ public class AppointmentController {
             return new ResponseEntity<>(Collections.emptyList(), HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/GetAllDepartmentByUser/{user_id}")
+    public ResponseEntity<List<Appointment>> getAllDepartmentByUserId(@PathVariable("user_id") Long id) {
+        try {
+            List<Appointment> appointment = this.appointmentService.findAllAppointmentByUserId(id);
+            return new ResponseEntity<>(appointment, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Collections.emptyList(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @PostMapping(path="/CreateNewAppointment", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Object> newUser(@RequestBody Appointment newAppointment, @RequestParam("department_id") Long Did, @RequestParam("user_id") Long Uid) {
+    public ResponseEntity<Object> newUser(@RequestBody Appointment newAppointment, @RequestParam("department_id") Long Did, @RequestParam("user_id") Long Uid, @RequestParam("doctor_id") Long doctor_id) {
         try {
-            this.appointmentService.createAppointment(newAppointment, Did, Uid);
+            this.appointmentService.createAppointment(newAppointment, Did, Uid, doctor_id);
             return ResponseEntity.status(HttpStatus.OK).body("create appointment success");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to save appointment: " + e.getMessage());

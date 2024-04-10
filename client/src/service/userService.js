@@ -141,6 +141,14 @@ const getDepartmentBySymptom  = async (symptom) => {
   const url = `${backendURL}/api/Department/GetDepartmentBySymptom?symptom=${symptom}`;
   return await axios.get(url);
 }
+const createNewAppointment= async (data) => {
+  const url = `${backendURL}/api/Appointment/CreateNewAppointment?department_id=${data.department_id}&user_id=${data.user_id}&doctor_id=${data.doctor_id}`;
+  return await axios.post(url, data);
+}
+const getAppointmentHistory = async (user_id) => {
+  const url = `${backendURL}/api/Appointment/GetAllDepartmentByUser/${user_id}`;
+  return await axios.get(url);
+}
 export {
   handleAuth,
   getUser,
@@ -160,5 +168,7 @@ export {
   handleLogin,
   getInfoUserById,
   getSymptom,
-  getDepartmentBySymptom
+  getDepartmentBySymptom,
+  createNewAppointment,
+  getAppointmentHistory
 };

@@ -35,6 +35,7 @@ const AdminDepartment = () => {
     const [dataEdit, setDataEdit] = useState({});
     const [toggleAdd, setToggleAdd] = useState(false);
     const [departmentData, setDepartmentData] = useState([]);
+    const [breadcrumbs, setBreadcrumbs] = useState([]);
     const handleNav = (request_data) => {
         if (request_data.request === "View") {
             var department_id = request_data.data;
@@ -59,6 +60,11 @@ const AdminDepartment = () => {
                 
                 // Update state with the fetched data
                 setDepartmentData(data.data);
+                const breadcrumbData = [
+                    { label: 'Hospitals', path: '/admin' },
+                    { label: 'Departments', path: "/admin/hospital/" + hospital_id + "/department/" },
+                ];
+                setBreadcrumbs(breadcrumbData);
             } catch (error) {
                 // Handle errors if any
                 console.error('Failed to fetch hospital data:', error);
@@ -110,6 +116,31 @@ const AdminDepartment = () => {
                             </div>
                         </div>
                     </CardHeader>
+                    <nav area-label='breadcrumb'>
+                        <ol className='breadcrumb flex gap-2 ml-4 mt-2 text-blue-500'>
+                            {
+                                breadcrumbs.map((breadcrumb, index) => (
+                                    <li key={index} className='breadcrumb-item'>
+                                        {
+                                            index === breadcrumbs.length - 1 ? (
+                                                <span>
+                                                    {breadcrumb.label}
+                                                </span>
+
+                                            ) : (
+                                                <a href={breadcrumb.path} className="hover:text-blue-900">
+                                                    {breadcrumb.label}
+
+                                                    <a className="opacity-50" > {">"} </a>
+                                                </a>
+
+                                            )
+                                        }
+                                    </li>
+                                ))
+                            }
+                        </ol>
+                    </nav>
                     <CardBody className="overflow-scroll px-0">
                         <table className="w-full min-w-max table-auto text-left">
                             <thead>

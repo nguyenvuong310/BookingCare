@@ -1,9 +1,6 @@
 package com.example.bookingCare.Service;
 
-import com.example.bookingCare.models.Appointment;
-import com.example.bookingCare.models.Department;
-import com.example.bookingCare.models.User;
-import com.example.bookingCare.models.UserNoPassword;
+import com.example.bookingCare.models.*;
 import com.example.bookingCare.repository.AppointmentRepository;
 import com.example.bookingCare.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +19,13 @@ public class AppointmentService {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private DoctorService doctorService;
     public List<Appointment> findAllAppointmentByDoctorId(Long id) {
         return this.appointmentRepository.findByDoctorId(id);
+    }
+    public List<Appointment> findAllAppointmentByUserId(Long id) {
+        return this.appointmentRepository.findByUserId(id);
     }
     public Appointment findAppointmentById(Long id) {
         Optional<Appointment> optionalAppointment = this.appointmentRepository.findById(id);
@@ -35,11 +36,13 @@ public class AppointmentService {
         return true;
     }
 
-    public void createAppointment(Appointment appointment, Long Did, Long Uid) {
+    public void createAppointment(Appointment appointment, Long Did, Long Uid, Long doctor_id) {
         Department department = this.departmentService.findDepartmentById(Did);
         appointment.setDepartment(department);
         User user = this.userService.findUserHavePasswordById(Uid);
         appointment.setUser(user);
+        Doctor doctor = this.doctorService.findDoctorById(doctor_id);
+        appointment.setDoctor(doctor);
         this.appointmentRepository.save(appointment);
     }
     public Appointment updateAppointment(Appointment editAppointment,Long id) {

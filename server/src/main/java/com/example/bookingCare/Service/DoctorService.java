@@ -21,6 +21,9 @@ public class DoctorService {
         List<Doctor> doctors = this.DoctorRepository.findAll();
         return doctors;
     }
+    public Doctor findDoctorById(Long id) {
+        return this.DoctorRepository.findById(id).get();
+    }
     public List<Doctor> findDoctorByDepartmentId(Long id) {
         return this.DoctorRepository.findAll()
                 .stream()

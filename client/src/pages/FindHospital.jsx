@@ -1,34 +1,90 @@
 import Header from "../components/Header";
 import { useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import GGM from "../assets/GGM.jpg"
 import {
     Typography,
 } from "@material-tailwind/react";
-import { getSymptom, getDepartmentBySymptom } from "../service/userService";
+import { getSymptom, getDepartmentBySymptom, createNewAppointment } from "../service/userService";
 import { getHospital } from "../service/adminService";
+import { useParams } from "react-router-dom";
 const FindHospital = () => {
+    const params = useParams();
     const [symptom, setSymptom] = useState([])
-    const [department, setDepartment] = useState("");
+    const [department, setDepartment] = useState([]);
     const [hospital, setHospital] = useState([])
     const [latitude, setLatitude] = useState(10.755440156279546)
     const [longitude, setLongitude] = useState(106.66445996649227)
+    const [hospital_id, setHospitalId] = useState(1)
+    const [date, setDate] = useState("")
+    const [time, setTime] = useState("")
+    const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             const symptomdata = await getSymptom();
             const hospitaldata = await getHospital();
             setSymptom(symptomdata.data)
-            setDepartment(symptomdata.data[0].department.name)
+            setDepartment(symptomdata.data[0].department)
             setHospital(hospitaldata.data)
         }
         fetchData()
       }, []);
+    useEffect(() => {
+        setIsSubmitEnabled(date !== "" && time !== "");
+    }, [date, time]);
     const handleSymptomChange = async (event) => {
         const data = await getDepartmentBySymptom(event.target.value)
-        setDepartment(data.data.name)
+        setDepartment(data.data)
     };
-    // const handleHospitalChange = (event) => {
-    //     if (event.target.value == "")
-    // }
+    const handleDateChange = (event) => {
+        setDate(event.target.value);
+    };
+
+    const handleTimeChange = (event) => {
+        setTime(event.target.value);
+    };
+    const handleHospitalChange = (event) => {
+        if (event.target.value == "Bệnh viện Đại học Y dược TPHCM") {
+            setLatitude(10.755408535200909)
+            setLongitude(106.6644277799864)
+            setHospitalId(1)
+        }
+        else if (event.target.value == "Bệnh viện Nhân dân 115") {
+            // 10.774514376992066, 106.66652836041224
+            setLatitude(10.774514376992066)
+            setLongitude(106.66652836041224)
+            setHospitalId(2)
+        }
+        else if (event.target.value == "Bệnh viện Nhi đồng 1") {
+            setLatitude(10.768639347913872)
+            setLongitude(106.67017657173749)
+            setHospitalId(3)
+        }
+        else if (event.target.value == "Bệnh viện Chợ Rẫy") {
+            setLatitude(10.757882802313738)
+            setLongitude(106.65951425891559)
+            setHospitalId(4)
+        }
+        else if (event.target.value == "Bệnh viện Từ Dũ") {
+            setLatitude(10.768264387260174)
+            setLongitude(106.6854163524339)
+            setHospitalId(5)
+        }
+    }
+    const handleSubmit = async () => {
+        const data = {
+            date: date,
+            time: time,
+            status: "Booked",
+            user_id: params.user_id,
+            doctor_id: department.id + hospital_id - 1,
+            department_id: department.id + hospital_id - 1,
+        }
+        await createNewAppointment(data)
+        navigate("/user/" + params.user_id + "/history")
+        
+    }
     return (
         <>
              <Header role='user' />
@@ -57,7 +113,7 @@ const FindHospital = () => {
                                     Department
                                 </label>
                                 <div className="mt-2">
-                                    <input readOnly={true} value={department} className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"/>
+                                    <input readOnly={true} value={department.name} className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"/>
                                 </div>
                             </div>
                             <div className="sm:col-span-4">
@@ -82,7 +138,9 @@ const FindHospital = () => {
                                 </label>
                                 <div className="mt-2">
                                     <input type="date"
-
+                                        required
+                                        value={date}
+                                        onChange={handleDateChange}
                                         className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                     >
                                     </input>
@@ -94,7 +152,9 @@ const FindHospital = () => {
                                 </label>
                                 <div className="mt-2">
                                     <input type="time"
-
+                                        required
+                                        value={time}
+                                        onChange={handleTimeChange}
                                         className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                     >
                                     </input>
@@ -112,7 +172,7 @@ const FindHospital = () => {
                         allowFullScreen
                         src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDwi3aHuwPxo2xmyUEiVNmvPWsQHoUtk3Y&q=${latitude},${longitude}`}
     ></iframe>
-                    <button id="upLoadBtn" type="button" className="enabled:bg-blue-600 justify-self-end rounded-xl px-5 py-1.5
+                    <button disabled={!isSubmitEnabled} onClick={handleSubmit} id="upLoadBtn" type="button" className="enabled:bg-blue-600 justify-self-end rounded-xl px-5 py-1.5
                                         text-white  enabled:active:bg-blue-700 shadow enabled:hover:bg-blue-700 enabled:hover:shadow-lg outline-none 
                                         enabled:focus:outline-none mr-20 mt-16 
                                         items-center ease-linear transition-all duration-150 enabled:active:ring ring-blue-400 enabled:focus:ring
