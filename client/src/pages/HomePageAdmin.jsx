@@ -41,7 +41,7 @@ const HomePageAdmin = () => {
             setDataEdit(request_data.data)
         }
 
-        else if (request_data.request === "Add") {          
+        else if (request_data.request === "Add") {
             setToggleAdd(!toggleAdd)
             setDataEdit(request_data.data)
         }
@@ -101,7 +101,7 @@ const HomePageAdmin = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                <Button className="flex items-center gap-3" size="sm" onClick={() => handleNav({request: "Add", data: {id: "", name: "", location: ""}})}>
+                                <Button className="flex items-center gap-3" size="sm" onClick={() => handleNav({ request: "Add", data: { id: "", name: "", location: "" } })}>
                                     ADD <PlusCircleIcon strokeWidth={2} className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -177,7 +177,7 @@ const HomePageAdmin = () => {
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip content="Edit Hospital">
-                                                    <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: hospital.id, name: hospital.name, location: hospital.location}})}>
+                                                        <IconButton variant="text" onClick={() => handleNav({ request: "Edit", data: { id: hospital.id, name: hospital.name, location: hospital.location } })}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -228,8 +228,8 @@ const HomePageAdmin = () => {
                 </Card>
 
             </div>
-            {toggleEdit && <EditField values={dataEdit} table="hospitals" open={toggleEdit} parentCallBack={handleToggleEdit}/>}
-            {toggleAdd && <AddField values={dataEdit} table="hospitals" open={toggleAdd} parentCallBack={handleToggleAdd}/>}
+            {toggleEdit && <EditField values={dataEdit} table="hospitals" open={toggleEdit} parentCallBack={handleToggleEdit} />}
+            {toggleAdd && <AddField values={dataEdit} table="hospitals" open={toggleAdd} parentCallBack={handleToggleAdd} />}
         </>
     );
 }

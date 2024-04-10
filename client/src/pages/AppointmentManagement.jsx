@@ -21,23 +21,34 @@ import {
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { getAppointment} from "../service/adminService";
+import { getAppointment } from "../service/adminService";
 import React, { useEffect, useState } from "react";
 const TABLE_HEAD = ["ID", "Patient", "Doctor", "Department", "Date", "Time", "Status"];
 const Appointment = () => {
     const params = useParams();
     const doctor_id = params.doctor_id;
+    const hospital_id = params.hospital_id;
+    const department_id = params.department_id;
     const navigate = useNavigate();
     const [appointmentData, setAppointmentData] = useState([]);
+    const [breadcrumbs, setBreadcrumbs] = useState([]);
     useEffect(() => {
         // Define an async function inside useEffect to fetch data
         const fetchData = async () => {
             try {
                 // Call the getHospital function from the service
                 const data = await getAppointment(doctor_id);
-                
+
                 // Update state with the fetched data
                 setAppointmentData(data.data);
+
+                const breadcrumbData = [
+                    { label: 'Hospitals', path: '/admin' },
+                    { label: 'Departments', path: "/admin/hospital/" + hospital_id + "/department/" },
+                    { label: 'Doctors', path: "/admin/hospital/" + hospital_id + "/department/" + department_id + "/doctor/" },
+                    { label: 'Appointments', path: "/admin/hospital/" + hospital_id + "/department/" + department_id + "/doctor/" + doctor_id + "/appointment" },
+                ];
+                setBreadcrumbs(breadcrumbData);
             } catch (error) {
                 // Handle errors if any
                 console.error('Failed to fetch doctor data:', error);
@@ -54,10 +65,10 @@ const Appointment = () => {
                         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
                             <div>
                                 <Typography variant="h5" color="blue-gray">
-                                    Schedule
+                                    Appointments
                                 </Typography>
                                 <Typography color="gray" className="mt-1 font-normal">
-                                    These are overview about schedule
+                                    These are overview about appointments
                                 </Typography>
                             </div>
                             <div className="flex w-full shrink-0 gap-2 md:w-max">
@@ -67,10 +78,35 @@ const Appointment = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                
+
                             </div>
                         </div>
                     </CardHeader>
+                    <nav area-label='breadcrumb'>
+                        <ol className='breadcrumb flex gap-2 ml-4 mt-2 text-blue-500'>
+                            {
+                                breadcrumbs.map((breadcrumb, index) => (
+                                    <li key={index} className='breadcrumb-item'>
+                                        {
+                                            index === breadcrumbs.length - 1 ? (
+                                                <span>
+                                                    {breadcrumb.label}
+                                                </span>
+
+                                            ) : (
+                                                <a href={breadcrumb.path} className="hover:text-blue-900">
+                                                    {breadcrumb.label}
+
+                                                    <a className="opacity-50" > {">"} </a>
+                                                </a>
+
+                                            )
+                                        }
+                                    </li>
+                                ))
+                            }
+                        </ol>
+                    </nav>
                     <CardBody className="overflow-scroll px-0">
                         <table className="w-full min-w-max table-auto text-left">
                             <thead>
@@ -170,7 +206,7 @@ const Appointment = () => {
                                                     </Typography>
                                                 </td>
 
-                                               
+
                                             </tr>
                                         );
                                     },

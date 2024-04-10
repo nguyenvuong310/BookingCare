@@ -21,7 +21,7 @@ import {
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { getSchedule, delSchedule} from "../service/adminService";
+import { getSchedule, delSchedule } from "../service/adminService";
 import EditField from "../components/EditField";
 import AddField from "../components/AddField";
 import React, { useEffect, useState } from "react";
@@ -30,18 +30,20 @@ const TABLE_HEAD = ["ID", "Date", "Time", "Activity"];
 const Schedule = () => {
     const params = useParams();
     const doctor_id = params.doctor_id;
+    const hospital_id = params.hospital_id;
     const department_id = params.department_id;
     const [toggleEdit, setToggleEdit] = useState(false);
     const [dataEdit, setDataEdit] = useState({});
     const [toggleAdd, setToggleAdd] = useState(false);
     const navigate = useNavigate();
     const [scheduleData, setScheduleData] = useState([]);
+    const [breadcrumbs, setBreadcrumbs] = useState([]);
     const handleNav = (request_data) => {
         if (request_data.request === "Edit") {
             setToggleEdit(!toggleEdit)
             setDataEdit(request_data.data)
         }
-        else if (request_data.request === "Add") {          
+        else if (request_data.request === "Add") {
             setToggleAdd(!toggleAdd)
             setDataEdit(request_data.data)
         }
@@ -52,9 +54,17 @@ const Schedule = () => {
             try {
                 // Call the getHospital function from the service
                 const data = await getSchedule(doctor_id);
-                
+
                 // Update state with the fetched data
                 setScheduleData(data.data);
+                const breadcrumbData = [
+                    { label: 'Hospitals', path: '/admin' },
+                    { label: 'Departments', path: "/admin/hospital/" + hospital_id + "/department/" },
+                    { label: 'Doctors', path: "/admin/hospital/" + hospital_id + "/department/" + department_id + "/doctor/" },
+                    { label: 'Schedules', path: "/admin/hospital/" + hospital_id + "/department/" + department_id + "/doctor/" + doctor_id + "/schedule" },
+                ];
+                setBreadcrumbs(breadcrumbData);
+
             } catch (error) {
                 // Handle errors if any
                 console.error('Failed to fetch doctor data:', error);
@@ -101,12 +111,37 @@ const Schedule = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                <Button className="flex items-center gap-3" size="sm" onClick={() => handleNav({request: "Add", data: {id: "", date: "", time: "", slot: "", doctor_id: doctor_id}})}>
+                                <Button className="flex items-center gap-3" size="sm" onClick={() => handleNav({ request: "Add", data: { id: "", date: "", time: "", slot: "", doctor_id: doctor_id } })}>
                                     ADD <PlusCircleIcon strokeWidth={2} className="h-4 w-4" />
                                 </Button>
                             </div>
                         </div>
                     </CardHeader>
+                    <nav area-label='breadcrumb'>
+                        <ol className='breadcrumb flex gap-2 ml-4 mt-2 text-blue-500'>
+                            {
+                                breadcrumbs.map((breadcrumb, index) => (
+                                    <li key={index} className='breadcrumb-item'>
+                                        {
+                                            index === breadcrumbs.length - 1 ? (
+                                                <span>
+                                                    {breadcrumb.label}
+                                                </span>
+
+                                            ) : (
+                                                <a href={breadcrumb.path} className="hover:text-blue-900">
+                                                    {breadcrumb.label}
+
+                                                    <a className="opacity-50" > {">"} </a>
+                                                </a>
+
+                                            )
+                                        }
+                                    </li>
+                                ))
+                            }
+                        </ol>
+                    </nav>
                     <CardBody className="overflow-scroll px-0">
                         <table className="w-full min-w-max table-auto text-left">
                             <thead>
@@ -172,7 +207,7 @@ const Schedule = () => {
 
                                                 <td className={classes}>
                                                     <Tooltip content="Edit Schedule">
-                                                        <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: schedule.id, date: schedule.date, time: schedule.time, slot: schedule.slot, doctor_id: doctor_id}})}>
+                                                        <IconButton variant="text" onClick={() => handleNav({ request: "Edit", data: { id: schedule.id, date: schedule.date, time: schedule.time, slot: schedule.slot, doctor_id: doctor_id } })}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -223,8 +258,8 @@ const Schedule = () => {
                 </Card>
 
             </div>
-            {toggleEdit && <EditField values={dataEdit} table="schedules" open={toggleEdit} parentCallBack={handleToggleEdit}/>}
-            {toggleAdd && <AddField values={dataEdit} table="schedules" open={toggleAdd} parentCallBack={handleToggleAdd}/>}
+            {toggleEdit && <EditField values={dataEdit} table="schedules" open={toggleEdit} parentCallBack={handleToggleEdit} />}
+            {toggleAdd && <AddField values={dataEdit} table="schedules" open={toggleAdd} parentCallBack={handleToggleAdd} />}
         </>
     );
 }
