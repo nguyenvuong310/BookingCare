@@ -41,7 +41,7 @@ const HomePageAdmin = () => {
             setDataEdit(request_data.data)
         }
 
-        else if (request_data.request === "Add") {          
+        else if (request_data.request === "Add") {
             setToggleAdd(!toggleAdd)
             setDataEdit(request_data.data)
         }
@@ -82,8 +82,8 @@ const HomePageAdmin = () => {
     return (
         <>
             <Header role='admin' />
-            <div>
-                <Card className="h-full w-full">
+            <div className="px-36 bg-gray-100 h-[calc(100vh-70px)]">
+                <Card className="relative h-full w-full">
                     <CardHeader floated={false} shadow={false} className="rounded-none">
                         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
                             <div>
@@ -101,25 +101,25 @@ const HomePageAdmin = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                <Button className="flex items-center gap-3" size="sm" onClick={() => handleNav({request: "Add", data: {id: "", name: "", location: ""}})}>
+                                <Button className="flex items-center gap-3 bg-green-600" size="sm" onClick={() => handleNav({ request: "Add", data: { id: "", name: "", location: "" } })}>
                                     ADD <PlusCircleIcon strokeWidth={2} className="h-4 w-4" />
                                 </Button>
                             </div>
                         </div>
                     </CardHeader>
-                    <CardBody className="overflow-scroll px-0">
+                    <CardBody className=" px-0">
                         <table className="w-full min-w-max table-auto text-left">
                             <thead>
                                 <tr>
                                     {TABLE_HEAD.map((head) => (
                                         <th
                                             key={head}
-                                            className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                                            className="border-y border-blue-gray-100 bg-blue-500 p-4"
                                         >
                                             <Typography
                                                 variant="small"
-                                                color="blue-gray"
-                                                className="font-normal leading-none opacity-70"
+                                                color="white"
+                                                className="font-bold leading-none opacity-80"
                                             >
                                                 {head}
                                             </Typography>
@@ -177,7 +177,7 @@ const HomePageAdmin = () => {
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip content="Edit Hospital">
-                                                    <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: hospital.id, name: hospital.name, location: hospital.location}})}>
+                                                        <IconButton variant="text" onClick={() => handleNav({ request: "Edit", data: { id: hospital.id, name: hospital.name, location: hospital.location } })}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -194,7 +194,7 @@ const HomePageAdmin = () => {
                             </tbody>
                         </table>
                     </CardBody>
-                    <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+                    <CardFooter className="flex absolute inset-x-0 bottom-0 items-center justify-between border-t border-blue-gray-50 p-4">
                         <Button variant="outlined" size="sm">
                             Previous
                         </Button>
@@ -226,10 +226,9 @@ const HomePageAdmin = () => {
                         </Button>
                     </CardFooter>
                 </Card>
-
             </div>
-            {toggleEdit && <EditField values={dataEdit} table="hospitals" open={toggleEdit} parentCallBack={handleToggleEdit}/>}
-            {toggleAdd && <AddField values={dataEdit} table="hospitals" open={toggleAdd} parentCallBack={handleToggleAdd}/>}
+            {toggleEdit && <EditField values={dataEdit} table="hospitals" open={toggleEdit} parentCallBack={handleToggleEdit} />}
+            {toggleAdd && <AddField values={dataEdit} table="hospitals" open={toggleAdd} parentCallBack={handleToggleAdd} />}
         </>
     );
 }

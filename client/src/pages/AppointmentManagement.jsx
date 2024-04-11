@@ -21,7 +21,7 @@ import {
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { getAppointment} from "../service/adminService";
+import { getAppointment } from "../service/adminService";
 import React, { useEffect, useState } from "react";
 import { format } from 'date-fns';
 const TABLE_HEAD = ["ID", "Patient", "Doctor", "Department", "Date", "Time", "Status"];
@@ -39,7 +39,7 @@ const Appointment = () => {
             try {
                 // Call the getHospital function from the service
                 const data = await getAppointment(doctor_id);
-                
+
                 // Update state with the fetched data
                 setAppointmentData(data.data);
                 const breadcrumbData = [
@@ -59,8 +59,8 @@ const Appointment = () => {
     return (
         <>
             <Header role='admin' />
-            <div>
-                <Card className="h-full w-full">
+            <div className="px-36 bg-gray-100 h-[calc(100vh-70px)]">
+                <Card className="relative h-full w-full">
                     <CardHeader floated={false} shadow={false} className="rounded-none">
                         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
                             <div>
@@ -78,7 +78,7 @@ const Appointment = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                
+
                             </div>
                         </div>
                     </CardHeader>
@@ -107,19 +107,19 @@ const Appointment = () => {
                             }
                         </ol>
                     </nav>
-                    <CardBody className="overflow-scroll px-0">
+                    <CardBody className=" px-0">
                         <table className="w-full min-w-max table-auto text-left">
                             <thead>
                                 <tr>
                                     {TABLE_HEAD.map((head) => (
                                         <th
                                             key={head}
-                                            className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                                            className="border-y border-blue-gray-100 bg-blue-500 p-4"
                                         >
                                             <Typography
                                                 variant="small"
-                                                color="blue-gray"
-                                                className="font-normal leading-none opacity-70"
+                                                color="white"
+                                                className="font-bold leading-none opacity-80"
                                             >
                                                 {head}
                                             </Typography>
@@ -206,7 +206,7 @@ const Appointment = () => {
                                                     </Typography>
                                                 </td>
 
-                                               
+
                                             </tr>
                                         );
                                     },
@@ -214,7 +214,7 @@ const Appointment = () => {
                             </tbody>
                         </table>
                     </CardBody>
-                    <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+                    <CardFooter className="flex absolute inset-x-0 bottom-0 items-center justify-between border-t border-blue-gray-50 p-4">
                         <Button variant="outlined" size="sm">
                             Previous
                         </Button>

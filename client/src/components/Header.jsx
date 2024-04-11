@@ -30,7 +30,7 @@ const Header = ({ role }) => {
   //     "resize",
   //     () => window.innerWidth >= 960 && setOpenNav(false),
   //   );
-    
+
   // }, []);
   const backAdminpage = () => {
     navigate(path.HOMEPAGEADMIN);
@@ -41,7 +41,7 @@ const Header = ({ role }) => {
   const handleNav = (event) => {
     if (event === "Book") {
       navigate("/user/" + user.id + "/findHospital")
-    } 
+    }
     else if (event === "History") {
       navigate("/user/" + user.id + "/history")
     }
@@ -108,7 +108,7 @@ const Header = ({ role }) => {
               <div class="flex flex-shrink-0 items-center">
               </div>
               <div class="flex flex-rol items-center space-x-[40px] px-3 py-2 cursor-pointer " >
-                <img src={iconImage} alt="Logo" className="w-[75px]" onClick={() => backUserpage(user.id)}/>
+                <img src={iconImage} alt="Logo" className="w-[75px]" onClick={() => backUserpage(user.id)} />
                 <Typography onClick={() => backUserpage(user.id)} variant="small" className=" font-bold text-blue-500 text-[20px] font-sans">
                   BOOKING CARE
                 </Typography>
@@ -122,15 +122,15 @@ const Header = ({ role }) => {
             </div>
             <div class="mb-4 mr-[70px] mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-14">
               <div class="hidden sm:ml-6 sm:block">
-              <div class="flex space-x-[60px]">
+                <div class="flex space-x-[60px]">
                   <div class="flex items-center space-x-4">
                     <p className="font-bold text-blue-800 text-[20px]">{user.name}</p>
                     <a
-                     href="/"
-                     class="rounded-md bg-blue-600 px-4 py-2 text-md font-medium  text-white"
-                     aria-current="page"
-                   >
-                     Log Out
+                      href="/"
+                      class="rounded-md bg-blue-600 px-4 py-2 text-md font-medium  text-white"
+                      aria-current="page"
+                    >
+                      Log Out
                     </a>
                   </div>
                 </div>
@@ -156,31 +156,14 @@ const Header = ({ role }) => {
                 </Typography>
               </div>
             </div>
-            <div class="mb-4 mr-[70px] mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-14">
+            <div class="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-14">
               <div class="hidden sm:ml-6 sm:block">
                 <div class="flex space-x-[60px]">
-                  {/* <div class="text-[#636363] space-x-[50px] flex flex-rol rounded-md px-3 text-md font-semibold items-center">
-                    <div>
-                      Home
-                    </div>
-                    <div>
-                      About Us
-                    </div>
-                    <div>
-                      Service
-                    </div>
-                    <div>
-                      Blog
-                    </div>
-                    <div>
-                      Contact Us
-                    </div>
-                  </div> */}
                   <div class="flex items-center space-x-4">
-                    <p className="font-bold text-red-800 text-[20px]">Administrator</p>
+                    <p className="font-bold text-blue-800 text-[20px]">Administrator</p>
                     <a
                       href="/"
-                      class="rounded-md bg-red-600 px-4 py-2 text-md font-medium  text-white"
+                      class="rounded-md bg-blue-600 px-4 py-2 text-md font-medium  text-white"
                       aria-current="page"
                     >
                       Log Out

@@ -21,7 +21,7 @@ import {
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { getSchedule, delSchedule} from "../service/adminService";
+import { getSchedule, delSchedule } from "../service/adminService";
 import EditField from "../components/EditField";
 import AddField from "../components/AddField";
 import React, { useEffect, useState } from "react";
@@ -43,7 +43,7 @@ const Schedule = () => {
             setToggleEdit(!toggleEdit)
             setDataEdit(request_data.data)
         }
-        else if (request_data.request === "Add") {          
+        else if (request_data.request === "Add") {
             setToggleAdd(!toggleAdd)
             setDataEdit(request_data.data)
         }
@@ -54,7 +54,7 @@ const Schedule = () => {
             try {
                 // Call the getHospital function from the service
                 const data = await getSchedule(doctor_id);
-                
+
                 // Update state with the fetched data
                 setScheduleData(data.data);
                 const breadcrumbData = [
@@ -91,8 +91,8 @@ const Schedule = () => {
     return (
         <>
             <Header role='admin' />
-            <div>
-                <Card className="h-full w-full">
+            <div className="px-36 bg-gray-100 h-[calc(100vh-70px)]">
+                <Card className="relative h-full w-full">
                     <CardHeader floated={false} shadow={false} className="rounded-none">
                         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
                             <div>
@@ -110,7 +110,7 @@ const Schedule = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                <Button className="flex items-center gap-3" size="sm" onClick={() => handleNav({request: "Add", data: {id: "", date: "", time: "", slot: "", doctor_id: doctor_id}})}>
+                                <Button className="flex items-center gap-3 bg-green-600" size="sm" onClick={() => handleNav({ request: "Add", data: { id: "", date: "", time: "", slot: "", doctor_id: doctor_id } })}>
                                     ADD <PlusCircleIcon strokeWidth={2} className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -141,19 +141,19 @@ const Schedule = () => {
                             }
                         </ol>
                     </nav>
-                    <CardBody className="overflow-scroll px-0">
+                    <CardBody className="px-0">
                         <table className="w-full min-w-max table-auto text-left">
                             <thead>
                                 <tr>
                                     {TABLE_HEAD.map((head) => (
                                         <th
                                             key={head}
-                                            className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                                            className="border-y border-blue-gray-100 bg-blue-500 p-4"
                                         >
                                             <Typography
                                                 variant="small"
-                                                color="blue-gray"
-                                                className="font-normal leading-none opacity-70"
+                                                color="white"
+                                                className="font-bold leading-none opacity-80"
                                             >
                                                 {head}
                                             </Typography>
@@ -206,7 +206,7 @@ const Schedule = () => {
 
                                                 <td className={classes}>
                                                     <Tooltip content="Edit Schedule">
-                                                        <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: schedule.id, date: schedule.date, time: schedule.time, slot: schedule.slot, doctor_id: doctor_id}})}>
+                                                        <IconButton variant="text" onClick={() => handleNav({ request: "Edit", data: { id: schedule.id, date: schedule.date, time: schedule.time, slot: schedule.slot, doctor_id: doctor_id } })}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -223,7 +223,7 @@ const Schedule = () => {
                             </tbody>
                         </table>
                     </CardBody>
-                    <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+                    <CardFooter className="flex absolute inset-x-0 bottom-0 items-center justify-between border-t border-blue-gray-50 p-4">
                         <Button variant="outlined" size="sm">
                             Previous
                         </Button>
@@ -257,8 +257,8 @@ const Schedule = () => {
                 </Card>
 
             </div>
-            {toggleEdit && <EditField values={dataEdit} table="schedules" open={toggleEdit} parentCallBack={handleToggleEdit}/>}
-            {toggleAdd && <AddField values={dataEdit} table="schedules" open={toggleAdd} parentCallBack={handleToggleAdd}/>}
+            {toggleEdit && <EditField values={dataEdit} table="schedules" open={toggleEdit} parentCallBack={handleToggleEdit} />}
+            {toggleAdd && <AddField values={dataEdit} table="schedules" open={toggleAdd} parentCallBack={handleToggleAdd} />}
         </>
     );
 }

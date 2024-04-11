@@ -20,11 +20,11 @@ const FindHospital = () => {
             setHistory(data.data)
         }
         fetchData()
-      }, []);
+    }, []);
     return (
         <>
             <Header role='user' />
-            <div className="flex flex-col h-screen w-screen">
+            <div className="relative flex flex-col h-[calc(100vh-70px)] w-full">
                 <div className="pt-5 grid card bg-base-300 rounded-box place-items-center">
                     <Typography variant="h2">MY APPOINTMENTS</Typography>
                     <form class="pt-5 flex items-center w-1/2 mx-auto">
@@ -52,32 +52,32 @@ const FindHospital = () => {
                 <div className="pt-10 px-36 w-screen card bg-base-300 rounded-box place-items-center">
                     <div className="overflow-hidden">
                         <table class="min-w-full">
-                            <thead class="bg-white border-2">
+                            <thead class="bg-gray-100 border-2">
                                 <tr>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" class="text-sm font-bold text-gray-900 px-6 py-4 text-left">
                                         #
                                     </th>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" class="text-sm font-bold text-gray-900 px-6 py-4 text-left">
                                         Name
                                     </th>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" class="text-sm font-bold text-gray-900 px-6 py-4 text-left">
                                         Time
                                     </th>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" class="text-sm font-bold text-gray-900 px-6 py-4 text-left">
                                         Date
                                     </th>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" class="text-sm font-bold text-gray-900 px-6 py-4 text-left">
                                         Location
                                     </th>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" class="text-sm font-bold text-gray-900 px-6 py-4 text-left">
                                         Status
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {history && history.map((item, index) => (  
-                                    <tr class="bg-gray-100 border-b">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index+1}</td>
+                                {history && history.map((item, index) => (
+                                    <tr class="bg-white border">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {item.user.name}
                                         </td>
@@ -85,7 +85,7 @@ const FindHospital = () => {
                                             {item.time}
                                         </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        {format(new Date(item.date), 'dd/MM/yyyy')}
+                                            {format(new Date(item.date), 'dd/MM/yyyy')}
                                         </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {item.department.name + ", " + item.department.hospital.name}
@@ -94,12 +94,12 @@ const FindHospital = () => {
                                             {item.status}
                                         </td>
                                     </tr>
-                                ))} 
+                                ))}
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 px-36 py-10">
+                <CardFooter className="flex absolute inset-x-0 bottom-0 items-center justify-between border-blue-gray-50 px-36 py-10">
                     <Button variant="outlined" size="sm">
                         Previous
                     </Button>

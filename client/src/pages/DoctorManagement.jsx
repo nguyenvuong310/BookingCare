@@ -21,7 +21,7 @@ import {
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { getDoctor, delDoctor} from "../service/adminService";
+import { getDoctor, delDoctor } from "../service/adminService";
 import React, { useEffect, useState } from "react";
 import EditField from "../components/EditField";
 import AddField from "../components/AddField";
@@ -51,7 +51,7 @@ const DoctorManagement = () => {
             setDataEdit(request_data.data)
         }
 
-        else if (request_data.request === "Add") {          
+        else if (request_data.request === "Add") {
             setToggleAdd(!toggleAdd)
             setDataEdit(request_data.data)
         }
@@ -62,7 +62,7 @@ const DoctorManagement = () => {
             try {
                 // Call the getHospital function from the service
                 const data = await getDoctor(department_id);
-                
+
                 // Update state with the fetched data
                 setDoctorData(data.data);
                 const breadcrumbData = [
@@ -97,8 +97,8 @@ const DoctorManagement = () => {
     return (
         <>
             <Header role='admin' />
-            <div>
-                <Card className="h-full w-full">
+            <div className="px-36 bg-gray-100 h-[calc(100vh-70px)]">
+                <Card className="relative h-full w-full">
                     <CardHeader floated={false} shadow={false} className="rounded-none">
                         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
                             <div>
@@ -116,7 +116,7 @@ const DoctorManagement = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                <Button className="flex items-center gap-3" size="sm" onClick={() => handleNav({request: "Add", data: {id: "", name: "", birthday: "", address: "", gender: "", phone_number: "", qualifications: "", user_name: "", password: "", department_id: department_id}})}>
+                                <Button className="flex items-center gap-3 bg-green-600" size="sm" onClick={() => handleNav({ request: "Add", data: { id: "", name: "", birthday: "", address: "", gender: "", phone_number: "", qualifications: "", user_name: "", password: "", department_id: department_id } })}>
                                     ADD <PlusCircleIcon strokeWidth={2} className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -147,19 +147,19 @@ const DoctorManagement = () => {
                             }
                         </ol>
                     </nav>
-                    <CardBody className="overflow-scroll px-0">
+                    <CardBody className="px-0 ">
                         <table className="w-full min-w-max table-auto text-left">
                             <thead>
-                                <tr>
+                                <tr >
                                     {TABLE_HEAD.map((head) => (
                                         <th
                                             key={head}
-                                            className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                                            className="border-y border-blue-gray-100 bg-blue-500 p-4"
                                         >
                                             <Typography
                                                 variant="small"
-                                                color="blue-gray"
-                                                className="font-normal leading-none opacity-70"
+                                                color="white"
+                                                className="font-bold leading-none opacity-80"
                                             >
                                                 {head}
                                             </Typography>
@@ -212,7 +212,7 @@ const DoctorManagement = () => {
 
                                                 <td className={classes}>
                                                     <Tooltip content="View Schedule">
-                                                        <IconButton variant="text"  onClick={() => handleNav({ request: "Viewschedule", data: doctor.id })}>
+                                                        <IconButton variant="text" onClick={() => handleNav({ request: "Viewschedule", data: doctor.id })}>
                                                             <CalendarIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -222,7 +222,7 @@ const DoctorManagement = () => {
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip content="Edit Doctor">
-                                                        <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: doctor.id, name: doctor.name, birthday: doctor.birthday, address: doctor.address, gender: doctor.gender, phone_number: doctor.phone_number, qualifications: doctor.qualifications, user_name: doctor.user_name, password: doctor.password, department_id: department_id}})}>
+                                                        <IconButton variant="text" onClick={() => handleNav({ request: "Edit", data: { id: doctor.id, name: doctor.name, birthday: doctor.birthday, address: doctor.address, gender: doctor.gender, phone_number: doctor.phone_number, qualifications: doctor.qualifications, user_name: doctor.user_name, password: doctor.password, department_id: department_id } })}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -239,7 +239,7 @@ const DoctorManagement = () => {
                             </tbody>
                         </table>
                     </CardBody>
-                    <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+                    <CardFooter className="flex absolute inset-x-0 bottom-0 items-center bottom-0 justify-between border-t border-blue-gray-50 p-4">
                         <Button variant="outlined" size="sm">
                             Previous
                         </Button>
@@ -273,8 +273,8 @@ const DoctorManagement = () => {
                 </Card>
 
             </div>
-            {toggleEdit && <EditField values={dataEdit} table="doctors" open={toggleEdit} parentCallBack={handleToggleEdit}/>}
-            {toggleAdd && <AddField values={dataEdit} table="doctors" open={toggleAdd} parentCallBack={handleToggleAdd}/>}
+            {toggleEdit && <EditField values={dataEdit} table="doctors" open={toggleEdit} parentCallBack={handleToggleEdit} />}
+            {toggleAdd && <AddField values={dataEdit} table="doctors" open={toggleAdd} parentCallBack={handleToggleAdd} />}
         </>
     );
 }

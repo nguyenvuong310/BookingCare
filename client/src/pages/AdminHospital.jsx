@@ -101,7 +101,7 @@ const AdminHospital = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                <Button className="flex items-center gap-3" size="sm">
+                                <Button className="flex items-center gap-3 " size="sm">
                                     ADD <PlusCircleIcon strokeWidth={2} className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -119,7 +119,7 @@ const AdminHospital = () => {
                                             <Typography
                                                 variant="small"
                                                 color="blue-gray"
-                                                className="font-normal leading-none opacity-70"
+                                                className="font-bold leading-none opacity-70"
                                             >
                                                 {head}
                                             </Typography>

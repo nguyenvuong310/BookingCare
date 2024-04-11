@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import GGM from "../assets/GGM.jpg"
 import {
@@ -29,7 +29,7 @@ const FindHospital = () => {
             setHospital(hospitaldata.data)
         }
         fetchData()
-      }, []);
+    }, []);
     useEffect(() => {
         setIsSubmitEnabled(date !== "" && time !== "");
     }, [date, time]);
@@ -83,11 +83,11 @@ const FindHospital = () => {
         }
         await createNewAppointment(data)
         navigate("/user/" + params.user_id + "/history")
-        
+
     }
     return (
         <>
-             <Header role='user' />
+            <Header role='user' />
             <div className="grid grid-cols-2 w-full lg:flex-row">
                 <div className="grid flex-grow h-32 card rounded-box place-items-center">
                     <form className="ml-20">
@@ -113,7 +113,7 @@ const FindHospital = () => {
                                     Department
                                 </label>
                                 <div className="mt-2">
-                                    <input readOnly={true} value={department.name} className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"/>
+                                    <input readOnly={true} value={department.name} className="block pl-3 w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
                             <div className="sm:col-span-4">
@@ -160,25 +160,24 @@ const FindHospital = () => {
                                     </input>
                                 </div>
                             </div>
+
                         </div>
+                        <button disabled={!isSubmitEnabled} onClick={handleSubmit} id="upLoadBtn" type="button" className="relative bottom-0 left-0 mt-10 rounded-lg bg-blue-600 px-4 py-2 text-md font-medium text-white hover:bg-blue-700">
+                            DONE
+                        </button>
                     </form>
+
                 </div>
 
-                <div className="grid flex-grow h-32 card rounded-box place-items-center">
+                <div className="grid flex-grow h-32 mt-12 mr-12 card rounded-box place-items-center">
                     <iframe
                         width="600"
-                        height="450"
+                        height="500"
                         loading="lazy"
+                        className="shadow-xl"
                         allowFullScreen
                         src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDwi3aHuwPxo2xmyUEiVNmvPWsQHoUtk3Y&q=${latitude},${longitude}`}
-    ></iframe>
-                    <button disabled={!isSubmitEnabled} onClick={handleSubmit} id="upLoadBtn" type="button" className="enabled:bg-blue-600 justify-self-end rounded-xl px-5 py-1.5
-                                        text-white  enabled:active:bg-blue-700 shadow enabled:hover:bg-blue-700 enabled:hover:shadow-lg outline-none 
-                                        enabled:focus:outline-none mr-20 mt-16 
-                                        items-center ease-linear transition-all duration-150 enabled:active:ring ring-blue-400 enabled:focus:ring
-                                        disabled:bg-blue-400">
-                        DONE
-                    </button>
+                    ></iframe>
                 </div>
             </div>
 

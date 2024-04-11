@@ -46,7 +46,7 @@ const AdminDepartment = () => {
             setDataEdit(request_data.data)
         }
 
-        else if (request_data.request === "Add") {          
+        else if (request_data.request === "Add") {
             setToggleAdd(!toggleAdd)
             setDataEdit(request_data.data)
         }
@@ -57,7 +57,7 @@ const AdminDepartment = () => {
             try {
                 // Call the getHospital function from the service
                 const data = await getDepartment(hospital_id);
-                
+
                 // Update state with the fetched data
                 setDepartmentData(data.data);
                 const breadcrumbData = [
@@ -91,8 +91,8 @@ const AdminDepartment = () => {
     return (
         <>
             <Header role='admin' />
-            <div>
-                <Card className="h-full w-full">
+            <div className="px-36 bg-gray-100 h-[calc(100vh-70px)]">
+                <Card className="relative h-full w-full">
                     <CardHeader floated={false} shadow={false} className="rounded-none">
                         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
                             <div>
@@ -100,7 +100,7 @@ const AdminDepartment = () => {
                                     Department of Hospital {hospital_id}
                                 </Typography>
                                 <Typography color="gray" className="mt-1 font-normal">
-                                    These are overview about Department
+                                    These are overview about department
                                 </Typography>
                             </div>
                             <div className="flex w-full shrink-0 gap-2 md:w-max">
@@ -110,7 +110,7 @@ const AdminDepartment = () => {
                                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                                     />
                                 </div>
-                                <Button className="flex items-center gap-3" size="sm" onClick={() => handleNav({request: "Add", data: {id: "", name: "", location: "", symptom: "", hospital_id: hospital_id}})}>
+                                <Button className="flex items-center gap-3 bg-green-600" size="sm" onClick={() => handleNav({ request: "Add", data: { id: "", name: "", location: "", symptom: "", hospital_id: hospital_id } })}>
                                     ADD <PlusCircleIcon strokeWidth={2} className="h-4 w-4" />
                                 </Button>
                             </div>
@@ -141,19 +141,19 @@ const AdminDepartment = () => {
                             }
                         </ol>
                     </nav>
-                    <CardBody className="overflow-scroll px-0">
-                        <table className="w-full min-w-max table-auto text-left">
+                    <CardBody className="px-0">
+                        <table className="w-full min-w-max table-auto text-left rounded-t-lg">
                             <thead>
                                 <tr>
                                     {TABLE_HEAD.map((head) => (
                                         <th
                                             key={head}
-                                            className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                                            className="border-y border-blue-gray-100 bg-blue-500 p-4"
                                         >
                                             <Typography
                                                 variant="small"
-                                                color="blue-gray"
-                                                className="font-normal leading-none opacity-70"
+                                                color="white"
+                                                className="font-bold leading-none opacity-80"
                                             >
                                                 {head}
                                             </Typography>
@@ -206,12 +206,12 @@ const AdminDepartment = () => {
 
                                                 <td className={classes}>
                                                     <Tooltip content="View Doctor Detail">
-                                                        <IconButton variant="text"  onClick={() => handleNav({ request: "View", data: department.id })}>
+                                                        <IconButton variant="text" onClick={() => handleNav({ request: "View", data: department.id })}>
                                                             <EyeIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip content="Edit Department">
-                                                        <IconButton variant="text" onClick={() => handleNav({request: "Edit", data: {id: department.id, name: department.name, location: department.location, symptom: department.symptom}})}>
+                                                        <IconButton variant="text" onClick={() => handleNav({ request: "Edit", data: { id: department.id, name: department.name, location: department.location, symptom: department.symptom } })}>
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>
                                                     </Tooltip>
@@ -228,7 +228,7 @@ const AdminDepartment = () => {
                             </tbody>
                         </table>
                     </CardBody>
-                    <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+                    <CardFooter className="flex absolute inset-x-0 bottom-0 items-center justify-between border-t border-blue-gray-50 p-4">
                         <Button variant="outlined" size="sm">
                             Previous
                         </Button>
@@ -262,8 +262,8 @@ const AdminDepartment = () => {
                 </Card>
 
             </div>
-            {toggleEdit && <EditField values={dataEdit} table="departments" open={toggleEdit} parentCallBack={handleToggleEdit}/>}
-            {toggleAdd && <AddField values={dataEdit} table="departments" open={toggleAdd} parentCallBack={handleToggleAdd}/>}
+            {toggleEdit && <EditField values={dataEdit} table="departments" open={toggleEdit} parentCallBack={handleToggleEdit} />}
+            {toggleAdd && <AddField values={dataEdit} table="departments" open={toggleAdd} parentCallBack={handleToggleAdd} />}
         </>
     );
 }
