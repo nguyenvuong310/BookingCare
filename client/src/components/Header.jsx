@@ -127,7 +127,7 @@ const Header = ({ role }) => {
                     <p className="font-bold text-blue-800 text-[20px]">{user.name}</p>
                     <a
                       href="/"
-                      class="rounded-md bg-blue-600 px-4 py-2 text-md font-medium  text-white"
+                      class="rounded-md bg-blue-500 px-4 py-2 text-md font-medium  text-white"
                       aria-current="page"
                     >
                       Log Out
@@ -163,7 +163,7 @@ const Header = ({ role }) => {
                     <p className="font-bold text-blue-800 text-[20px]">Administrator</p>
                     <a
                       href="/"
-                      class="rounded-md bg-blue-600 px-4 py-2 text-md font-medium  text-white"
+                      class="rounded-md bg-blue-500 px-4 py-2 text-md font-medium  text-white"
                       aria-current="page"
                     >
                       Log Out

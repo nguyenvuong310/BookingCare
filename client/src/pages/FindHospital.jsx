@@ -88,96 +88,105 @@ const FindHospital = () => {
     return (
         <>
             <Header role='user' />
-            <div className="grid grid-cols-2 w-full lg:flex-row">
+            <div className="grid grid-cols-2 w-full lg:flex-row bg-gray-100 h-[calc(100vh-70px)]">
                 <div className="grid flex-grow h-32 card rounded-box place-items-center">
-                    <form className="ml-20">
-                        <div className="mt-10 grid gap-x-6 gap-y-8 sm:grid-cols-6">
-                            <div className="sm:col-span-4">
-                                <label className="block text-sm font-bold leading-6">
-                                    What is your symptom?
-                                </label>
-                                <div className="mt-2">
-                                    <select
-                                        onChange={(event) => handleSymptomChange(event)}
-                                        className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                    >
-                                        {symptom.map((item) => {
-                                            return <option>{item.name}</option>
-                                        })}
-                                    </select>
-                                </div>
+                    <div className="bg-white mt-10 p-5 rounded-lg border-2 border-gray-400 shadow-xl">
+                        <div className="flex justify-center">
+                            <div className="text-2xl font-bold">
+                                Booking your appointments
                             </div>
-
-                            <div className="sm:col-span-4">
-                                <label className="block text-sm font-bold leading-6 ">
-                                    Department
-                                </label>
-                                <div className="mt-2">
-                                    <input readOnly={true} value={department.name} className="block pl-3 w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" />
-                                </div>
-                            </div>
-                            <div className="sm:col-span-4">
-                                <label className="block text-sm font-bold leading-6 ">
-                                    Which hospital do you want to have an appointment?
-                                </label>
-                                <div className="mt-2">
-                                    <select
-                                        onChange={(event) => handleHospitalChange(event)}
-                                        className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                    >
-                                        {hospital.map((item) => {
-                                            return <option>{item.name}</option>
-                                        })}
-                                    </select>
-                                </div>
-
-                            </div>
-                            <div className="sm:col-span-4">
-                                <label className="block text-sm font-bold leading-6 ">
-                                    When will you be available for the appointment?
-                                </label>
-                                <div className="mt-2">
-                                    <input type="date"
-                                        required
-                                        value={date}
-                                        onChange={handleDateChange}
-                                        className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                    >
-                                    </input>
-                                </div>
-                            </div>
-                            <div className="sm:col-span-4">
-                                <label className="block text-sm font-bold leading-6 ">
-                                    Choose the time
-                                </label>
-                                <div className="mt-2">
-                                    <input type="time"
-                                        required
-                                        value={time}
-                                        onChange={handleTimeChange}
-                                        className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                    >
-                                    </input>
-                                </div>
-                            </div>
-
                         </div>
-                        <button disabled={!isSubmitEnabled} onClick={handleSubmit} id="upLoadBtn" type="button" className="relative bottom-0 left-0 mt-10 rounded-lg bg-blue-600 px-4 py-2 text-md font-medium text-white hover:bg-blue-700">
-                            DONE
-                        </button>
-                    </form>
+                        <form className="my-5 ml-5">
+                            <div className="grid gap-x-6 gap-y-8 sm:grid-cols-6">
+                                <div className="sm:col-span-4">
+                                    <label className="block text-sm font-bold leading-6">
+                                        What is your symptom?
+                                    </label>
+                                    <div className="mt-2">
+                                        <select
+                                            onChange={(event) => handleSymptomChange(event)}
+                                            className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                        >
+                                            {symptom.map((item) => {
+                                                return <option>{item.name}</option>
+                                            })}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="sm:col-span-4">
+                                    <label className="block text-sm font-bold leading-6 ">
+                                        Department
+                                    </label>
+                                    <div className="mt-2">
+                                        <input readOnly={true} value={department.name} className="block pl-3 w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" />
+                                    </div>
+                                </div>
+                                <div className="sm:col-span-4">
+                                    <label className="block text-sm font-bold leading-6 ">
+                                        Which hospital do you want to have an appointment?
+                                    </label>
+                                    <div className="mt-2">
+                                        <select
+                                            onChange={(event) => handleHospitalChange(event)}
+                                            className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                        >
+                                            {hospital.map((item) => {
+                                                return <option>{item.name}</option>
+                                            })}
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div className="sm:col-span-4">
+                                    <label className="block text-sm font-bold leading-6 ">
+                                        When will you be available for the appointment?
+                                    </label>
+                                    <div className="mt-2">
+                                        <input type="date"
+                                            required
+                                            value={date}
+                                            onChange={handleDateChange}
+                                            className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                        >
+                                        </input>
+                                    </div>
+                                </div>
+                                <div className="sm:col-span-4">
+                                    <label className="block text-sm font-bold leading-6 ">
+                                        Choose the time
+                                    </label>
+                                    <div className="mt-2">
+                                        <input type="time"
+                                            required
+                                            value={time}
+                                            onChange={handleTimeChange}
+                                            className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                        >
+                                        </input>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <button disabled={!isSubmitEnabled} onClick={handleSubmit} id="upLoadBtn" type="button" className="relative bottom-0 left-0 mt-10 rounded-lg bg-blue-600 px-4 py-2 text-md font-medium text-white hover:bg-blue-700">
+                                BOOK
+                            </button>
+                        </form>
+                    </div>
 
                 </div>
 
                 <div className="grid flex-grow h-32 mt-12 mr-12 card rounded-box place-items-center">
-                    <iframe
-                        width="600"
-                        height="500"
-                        loading="lazy"
-                        className="shadow-xl"
-                        allowFullScreen
-                        src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDwi3aHuwPxo2xmyUEiVNmvPWsQHoUtk3Y&q=${latitude},${longitude}`}
-                    ></iframe>
+                    <div className="bg-white rounded-lg border-2 border-gray-400 shadow-xl">
+                        <iframe
+                            width="600"
+                            height="500"
+                            loading="lazy"
+                            className="shadow-xl"
+                            allowFullScreen
+                            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDwi3aHuwPxo2xmyUEiVNmvPWsQHoUtk3Y&q=${latitude},${longitude}`}
+                        ></iframe>
+                    </div>
                 </div>
             </div>
 

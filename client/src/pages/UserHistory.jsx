@@ -5,10 +5,13 @@ import {
     Typography,
     CardFooter,
     Button,
-    IconButton
+    IconButton,
+    Chip
 } from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+
 import { useState, useEffect } from "react";
-import { getAppointmentHistory } from "../service/userService";
+import { getAppointmentHistory, UpdateAppointment } from "../service/userService";
 import { format } from 'date-fns';
 const FindHospital = () => {
     const [history, setHistory] = useState([])
@@ -21,6 +24,19 @@ const FindHospital = () => {
         }
         fetchData()
     }, []);
+
+    // const handleCancel = async (index) => {
+    //     console.log("12312312312");
+    //     const data = {
+    //         status: "Canceled",
+    //         date: history[index].date,
+    //         time: history[index].time,
+    //         id: history[index].id,
+    //     }
+    //     console.log(data)
+    //     await UpdateAppointment(data);
+    //     console.log("xong goi");
+    // }
     return (
         <>
             <Header role='user' />
@@ -72,11 +88,14 @@ const FindHospital = () => {
                                     <th scope="col" class="text-sm font-bold text-gray-900 px-6 py-4 text-left">
                                         Status
                                     </th>
+                                    {/* <th scope="col" class="text-sm font-bold text-gray-900 px-6 py-4 text-left">
+                                        Button
+                                    </th> */}
                                 </tr>
                             </thead>
                             <tbody>
                                 {history && history.map((item, index) => (
-                                    <tr class="bg-white border">
+                                    <tr class="bg-white border even:bg-blue-gray-50/50">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index + 1}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {item.user.name}
@@ -90,8 +109,19 @@ const FindHospital = () => {
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {item.department.name + ", " + item.department.hospital.name}
                                         </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {item.status}
+                                        <td class="text-sm font-medium px-6 py-4 whitespace-nowrap">
+                                            <div className="w-max">
+                                                <Chip
+                                                    size="sm"
+                                                    variant="ghost"
+                                                    value={item.status}
+                                                    color={
+                                                        item.status === "Booked"
+                                                            ? "green"
+                                                            : "red"
+                                                    }
+                                                />
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -99,36 +129,25 @@ const FindHospital = () => {
                         </table>
                     </div>
                 </div>
-                <CardFooter className="flex absolute inset-x-0 bottom-0 items-center justify-between border-blue-gray-50 px-36 py-10">
-                    <Button variant="outlined" size="sm">
-                        Previous
-                    </Button>
-                    <div className="flex items-center gap-2">
-                        <IconButton variant="outlined" size="sm">
-                            1
+                <CardFooter className="flex absolute inset-x-0 bottom-0 place-items-center border-blue-gray-50 px-36 py-10">
+                    <div className="flex items-center gap-8 ml-[35vw]">
+                        <IconButton
+                            size="sm"
+                            variant="outlined"
+                        >
+                            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />
                         </IconButton>
-                        <IconButton variant="text" size="sm">
-                            2
-                        </IconButton>
-                        <IconButton variant="text" size="sm">
-                            3
-                        </IconButton>
-                        <IconButton variant="text" size="sm">
-                            ...
-                        </IconButton>
-                        <IconButton variant="text" size="sm">
-                            8
-                        </IconButton>
-                        <IconButton variant="text" size="sm">
-                            9
-                        </IconButton>
-                        <IconButton variant="text" size="sm">
-                            10
+                        <Typography color="gray" className="font-normal">
+                            Page <strong className="text-gray-900"> 1 </strong> of{" "}
+                            <strong className="text-gray-900">1</strong>
+                        </Typography>
+                        <IconButton
+                            size="sm"
+                            variant="outlined"
+                        >
+                            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
                         </IconButton>
                     </div>
-                    <Button variant="outlined" size="sm">
-                        Next
-                    </Button>
                 </CardFooter>
             </div >
 

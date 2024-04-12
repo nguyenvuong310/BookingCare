@@ -137,13 +137,17 @@ const getSymptom = async () => {
   const url = `${backendURL}/api/Symptom/GetAllSymptom`;
   return await axios.get(url);
 }
-const getDepartmentBySymptom  = async (symptom) => {
+const getDepartmentBySymptom = async (symptom) => {
   const url = `${backendURL}/api/Department/GetDepartmentBySymptom?symptom=${symptom}`;
   return await axios.get(url);
 }
-const createNewAppointment= async (data) => {
+const createNewAppointment = async (data) => {
   const url = `${backendURL}/api/Appointment/CreateNewAppointment?department_id=${data.department_id}&user_id=${data.user_id}&doctor_id=${data.doctor_id}`;
   return await axios.post(url, data);
+}
+const UpdateAppointment = async (data) => {
+  const url = `${backendURL}/api/Appointment/UpdateAppointmentById/${data.id}`;
+  return await axios.put(url, data);
 }
 const getAppointmentHistory = async (user_id) => {
   const url = `${backendURL}/api/Appointment/GetAllDepartmentByUser/${user_id}`;
@@ -170,5 +174,6 @@ export {
   getSymptom,
   getDepartmentBySymptom,
   createNewAppointment,
-  getAppointmentHistory
+  getAppointmentHistory,
+  UpdateAppointment
 };

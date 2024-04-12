@@ -114,7 +114,7 @@ const HomePageAdmin = () => {
                                     {TABLE_HEAD.map((head) => (
                                         <th
                                             key={head}
-                                            className="border-y border-blue-gray-100 bg-blue-500 p-4"
+                                            className="border-y bg-blue-500 p-4"
                                         >
                                             <Typography
                                                 variant="small"
