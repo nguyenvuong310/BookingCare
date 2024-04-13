@@ -6,7 +6,7 @@ import {
     DialogBody,
 } from "@material-tailwind/react";
 
-import {createNewHospital, createNewDepartment, createNewDoctor, createNewSchedule} from "../service/adminService"
+import { createNewHospital, createNewDepartment, createNewDoctor, createNewSchedule } from "../service/adminService"
 const AddField = ({ values, table, open, parentCallBack }) => {
     const current_value = values;
     // console.log(form_value)
@@ -30,7 +30,7 @@ const AddField = ({ values, table, open, parentCallBack }) => {
 
         if (table === "hospitals") {
             console.log("Hospitals", data)
-            await createNewHospital(data) 
+            await createNewHospital(data)
         }
         else if (table === "departments") {
             console.log("Department", data)
@@ -61,7 +61,7 @@ const AddField = ({ values, table, open, parentCallBack }) => {
     return (
         <>
 
-            <Dialog open={openDialog}>
+            <Dialog open={openDialog} className="max-h-[80%] overflow-auto">
                 <DialogHeader className="text-2xl text-center">Add new {capitalizeFirst(table)}</DialogHeader>
                 <DialogBody>
 
@@ -100,11 +100,11 @@ const AddField = ({ values, table, open, parentCallBack }) => {
                                 <p class="font-bold">Item Created Successfully!</p>
                             </div>
                         </button>}
-                    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-                    <button onClick={handleOpen} type="button" className="ml-1.5 text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Close</button>
-                </form>
-            </DialogBody>
-        </Dialog >
+                        <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                        <button onClick={handleOpen} type="button" className="ml-1.5 text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Close</button>
+                    </form>
+                </DialogBody>
+            </Dialog >
         </>
 
     );
