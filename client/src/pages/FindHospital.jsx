@@ -90,14 +90,14 @@ const FindHospital = () => {
             <Header role='user' />
             <div className="grid grid-cols-2 w-full lg:flex-row bg-gray-100 h-[calc(100vh-70px)]">
                 <div className="grid flex-grow h-32 card rounded-box place-items-center">
-                    <div className="bg-white mt-10 p-5 rounded-lg border-2 border-gray-400 shadow-xl">
+                    <div className="bg-white mt-5 p-2 rounded-lg border-2 border-gray-400 shadow-xl">
                         <div className="flex justify-center">
-                            <div className="text-2xl font-bold">
+                            <div className="text-xl font-bold">
                                 Booking your appointments
                             </div>
                         </div>
-                        <form className="my-5 ml-5">
-                            <div className="grid gap-x-6 gap-y-8 sm:grid-cols-6">
+                        <form className="mt-5 ml-5">
+                            <div className="grid gap-x-6 gap-y-6 sm:grid-cols-6">
                                 <div className="sm:col-span-4">
                                     <label className="block text-sm font-bold leading-6">
                                         What is your symptom?
@@ -168,7 +168,8 @@ const FindHospital = () => {
                                 </div>
 
                             </div>
-                            <button disabled={!isSubmitEnabled} onClick={handleSubmit} id="upLoadBtn" type="button" className="relative bottom-0 left-0 mt-10 rounded-lg bg-blue-600 px-4 py-2 text-md font-medium text-white hover:bg-blue-700">
+                            <button disabled={!isSubmitEnabled} onClick={handleSubmit} id="upLoadBtn" type="button" className="relative bottom-0 left-0 mt-10 rounded-lg bg-blue-600 px-4 py-2 text-md font-medium text-white hover:bg-blue-700 enabled:bg-blue-600 enabled:active:bg-blue-700 enabled:hover:bg-blue-700 enabled:hover:shadow-lg enabled:active:ring ring-blue-400 enabled:focus:ring enabled:focus:outline-none
+                                        disabled:bg-blue-400">
                                 BOOK
                             </button>
                         </form>
