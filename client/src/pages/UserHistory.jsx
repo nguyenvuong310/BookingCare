@@ -129,7 +129,7 @@ const FindHospital = () => {
                         </table>
                     </div>
                 </div>
-                <CardFooter className="flex absolute inset-x-0 bottom-0 place-items-center border-blue-gray-50 px-36 py-10">
+                <CardFooter className="flex relative inset-x-0 bottom-0 place-items-center border-blue-gray-50 px-36 py-10">
                     <div className="flex items-center gap-8 ml-[32vw]">
                         <IconButton
                             size="sm"

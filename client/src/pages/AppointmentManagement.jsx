@@ -83,7 +83,7 @@ const Appointment = () => {
                         </div>
                     </CardHeader>
                     <nav area-label='breadcrumb'>
-                        <ol className='breadcrumb flex gap-2 ml-4 mt-2 text-blue-500'>
+                        <ol className='breadcrumb flex gap-2 ml-4 mt-2 text-blue-500 pb-6'>
                             {
                                 breadcrumbs.map((breadcrumb, index) => (
                                     <li key={index} className='breadcrumb-item'>
@@ -107,14 +107,14 @@ const Appointment = () => {
                             }
                         </ol>
                     </nav>
-                    <CardBody className=" px-0">
+                    <CardBody className="px-0 overflow-y-auto p-0">
                         <table className="w-full min-w-max table-auto text-left">
                             <thead>
                                 <tr>
                                     {TABLE_HEAD.map((head) => (
                                         <th
                                             key={head}
-                                            className="border-y border-blue-gray-100 bg-blue-500 p-4"
+                                            className="sticky top-0 border-y border-blue-gray-100 bg-blue-500 p-4"
                                         >
                                             <Typography
                                                 variant="small"
@@ -214,7 +214,7 @@ const Appointment = () => {
                             </tbody>
                         </table>
                     </CardBody>
-                    <CardFooter className="flex absolute inset-x-0 bottom-0 items-center justify-between border-t border-blue-gray-50 p-4">
+                    <CardFooter className="bg-white flex absolute inset-x-0 bottom-0 items-center justify-between border-t border-blue-gray-50 p-4">
                         <Button variant="outlined" size="sm">
                             Previous
                         </Button>
